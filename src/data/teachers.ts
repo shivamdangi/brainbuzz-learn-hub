@@ -1,0 +1,135 @@
+export interface Teacher {
+  id: number;
+  name: string;
+  classes: number[];
+  courses: string[];
+  qualifications: string;
+  experienceYears: number;
+  rating: number;
+  profileImage: string;
+  bio: string;
+  specializations: string[];
+}
+
+export const teachers: Teacher[] = [
+  {
+    id: 1,
+    name: "Dr. Rajesh Kumar",
+    classes: [9, 10, 11, 12],
+    courses: ["Mathematics", "Physics"],
+    qualifications: "Ph.D. Mathematics, M.Sc. Physics, B.Ed",
+    experienceYears: 12,
+    rating: 4.9,
+    profileImage: "/teachers/rajesh-kumar.jpg",
+    bio: "Passionate about making complex mathematical concepts simple and engaging. Specialized in competitive exam preparation.",
+    specializations: ["IIT-JEE Preparation", "Advanced Mathematics", "Problem Solving"]
+  },
+  {
+    id: 2,
+    name: "Ms. Priya Sharma",
+    classes: [6, 7, 8, 9, 10],
+    courses: ["English", "Hindi"],
+    qualifications: "M.A. English Literature, B.Ed, CELTA Certified",
+    experienceYears: 8,
+    rating: 4.8,
+    profileImage: "/teachers/priya-sharma.jpg",
+    bio: "Dedicated to improving language proficiency and creative writing skills. Focus on communication and expression.",
+    specializations: ["Grammar Excellence", "Creative Writing", "Public Speaking"]
+  },
+  {
+    id: 3,
+    name: "Mr. Amit Patel",
+    classes: [8, 9, 10, 11, 12],
+    courses: ["Chemistry", "Science"],
+    qualifications: "M.Sc. Chemistry, B.Ed",
+    experienceYears: 10,
+    rating: 4.7,
+    profileImage: "/teachers/amit-patel.jpg",
+    bio: "Making chemistry fun through practical examples and real-world applications. Expert in CBSE curriculum.",
+    specializations: ["Organic Chemistry", "Lab Techniques", "Board Exam Prep"]
+  },
+  {
+    id: 4,
+    name: "Ms. Sneha Reddy",
+    classes: [1, 2, 3, 4, 5],
+    courses: ["Mathematics", "Science", "EVS"],
+    qualifications: "B.Ed, Montessori Certified",
+    experienceYears: 6,
+    rating: 4.9,
+    profileImage: "/teachers/sneha-reddy.jpg",
+    bio: "Creating a nurturing learning environment for young minds. Focus on building strong foundational skills.",
+    specializations: ["Activity-Based Learning", "Early Education", "Concept Building"]
+  },
+  {
+    id: 5,
+    name: "Mr. Vikram Singh",
+    classes: [9, 10, 11, 12],
+    courses: ["Physics", "Mathematics"],
+    qualifications: "M.Sc. Physics, B.Tech, B.Ed",
+    experienceYears: 15,
+    rating: 4.8,
+    profileImage: "/teachers/vikram-singh.jpg",
+    bio: "Engineering background brings practical approach to physics and mathematics. Mentor for competitive exams.",
+    specializations: ["Engineering Physics", "Numerical Methods", "JEE Coaching"]
+  },
+  {
+    id: 6,
+    name: "Ms. Anjali Mehta",
+    classes: [6, 7, 8, 9, 10],
+    courses: ["Biology", "Science"],
+    qualifications: "M.Sc. Botany, B.Ed",
+    experienceYears: 7,
+    rating: 4.7,
+    profileImage: "/teachers/anjali-mehta.jpg",
+    bio: "Bringing nature and life sciences to life through engaging lessons and practical demonstrations.",
+    specializations: ["Botany", "Ecology", "NEET Foundation"]
+  },
+  {
+    id: 7,
+    name: "Mr. Karan Verma",
+    classes: [5, 6, 7, 8],
+    courses: ["Mathematics", "Science"],
+    qualifications: "M.Sc. Mathematics, B.Ed",
+    experienceYears: 9,
+    rating: 4.8,
+    profileImage: "/teachers/karan-verma.jpg",
+    bio: "Specializing in middle school mathematics with focus on problem-solving and logical thinking.",
+    specializations: ["Mental Math", "Vedic Mathematics", "Olympiad Training"]
+  },
+  {
+    id: 8,
+    name: "Ms. Divya Iyer",
+    classes: [1, 2, 3, 4, 5, 6],
+    courses: ["English", "EVS"],
+    qualifications: "M.A. English, B.Ed, TESOL Certified",
+    experienceYears: 5,
+    rating: 4.9,
+    profileImage: "/teachers/divya-iyer.jpg",
+    bio: "Making English learning enjoyable for young learners through stories, games, and interactive activities.",
+    specializations: ["Phonics", "Reading Comprehension", "Environmental Studies"]
+  },
+  {
+    id: 9,
+    name: "Mr. Rahul Desai",
+    classes: [8, 9, 10, 11, 12],
+    courses: ["Mathematics", "Computer Science"],
+    qualifications: "B.Tech Computer Science, M.Sc. Mathematics",
+    experienceYears: 11,
+    rating: 4.7,
+    profileImage: "/teachers/rahul-desai.jpg",
+    bio: "Bridging the gap between mathematics and technology. Expert in coding and computational thinking.",
+    specializations: ["Programming Basics", "Data Structures", "Algorithms"]
+  },
+  {
+    id: 10,
+    name: "Ms. Kavita Joshi",
+    classes: [6, 7, 8, 9, 10],
+    courses: ["Hindi", "Social Science"],
+    qualifications: "M.A. Hindi, M.A. History, B.Ed",
+    experienceYears: 10,
+    rating: 4.8,
+    profileImage: "/teachers/kavita-joshi.jpg",
+    bio: "Passionate about Hindi literature and Indian history. Making cultural studies engaging and relevant.",
+    specializations: ["Hindi Literature", "Indian History", "Civics"]
+  },
+];
