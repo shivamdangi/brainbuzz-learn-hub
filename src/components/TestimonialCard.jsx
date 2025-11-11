@@ -1,12 +1,7 @@
 import { Star, Quote } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { Testimonial } from "@/data/testimonials";
 
-interface TestimonialCardProps {
-  testimonial: Testimonial;
-}
-
-export const TestimonialCard = ({ testimonial }: TestimonialCardProps) => {
+export const TestimonialCard = ({ testimonial }) => {
   return (
     <Card className="p-6 hover:shadow-hover transition-all duration-300 relative">
       <Quote className="absolute top-4 right-4 h-8 w-8 text-muted/20" />

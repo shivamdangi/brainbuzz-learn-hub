@@ -3,7 +3,7 @@ import { Search, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TeacherCard } from "@/components/TeacherCard";
-import { Teacher, teachers } from "@/data/teachers";
+import { teachers } from "@/data/teachers";
 import {
   Select,
   SelectContent,
@@ -12,18 +12,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-interface ExplorePageProps {
-  onViewTeacher: (teacher: Teacher) => void;
-}
-
-export const ExplorePage = ({ onViewTeacher }: ExplorePageProps) => {
+export const ExplorePage = ({ onViewTeacher }) => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedClass, setSelectedClass] = useState<string>("all");
-  const [selectedCourse, setSelectedCourse] = useState<string>("all");
+  const [selectedClass, setSelectedClass] = useState("all");
+  const [selectedCourse, setSelectedCourse] = useState("all");
 
   // Extract unique courses
   const allCourses = useMemo(() => {
-    const coursesSet = new Set<string>();
+    const coursesSet = new Set();
     teachers.forEach((teacher) => {
       teacher.courses.forEach((course) => coursesSet.add(course));
     });

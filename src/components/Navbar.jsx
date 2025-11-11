@@ -2,12 +2,7 @@ import { useState } from "react";
 import { BrainCircuit, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-interface NavbarProps {
-  currentPage: string;
-  onNavigate: (page: string) => void;
-}
-
-export const Navbar = ({ currentPage, onNavigate }: NavbarProps) => {
+export const Navbar = ({ currentPage, onNavigate }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -17,7 +12,7 @@ export const Navbar = ({ currentPage, onNavigate }: NavbarProps) => {
     { name: "Contact", path: "contact" },
   ];
 
-  const handleNavigate = (page: string) => {
+  const handleNavigate = (page) => {
     onNavigate(page);
     setMobileMenuOpen(false);
   };

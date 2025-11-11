@@ -1,14 +1,4 @@
-export interface Testimonial {
-  id: number;
-  name: string;
-  class: number;
-  board: "CBSE" | "ICSE";
-  rating: number;
-  text: string;
-  image: string;
-}
-
-export const testimonials: Testimonial[] = [
+export const testimonials = [
   {
     id: 1,
     name: "Aarav Gupta",

@@ -2,15 +2,10 @@ import { Users, GraduationCap, TrendingUp, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TeacherCard } from "@/components/TeacherCard";
 import { TestimonialCard } from "@/components/TestimonialCard";
-import { Teacher, teachers } from "@/data/teachers";
+import { teachers } from "@/data/teachers";
 import { testimonials } from "@/data/testimonials";
 
-interface HomePageProps {
-  onNavigate: (page: string) => void;
-  onViewTeacher: (teacher: Teacher) => void;
-}
-
-export const HomePage = ({ onNavigate, onViewTeacher }: HomePageProps) => {
+export const HomePage = ({ onNavigate, onViewTeacher }) => {
   const featuredTeachers = teachers.slice(0, 3);
   const displayedTestimonials = testimonials.slice(0, 3);
 

@@ -5,19 +5,18 @@ import { HomePage } from "./HomePage";
 import { ExplorePage } from "./ExplorePage";
 import { PlatformPage } from "./PlatformPage";
 import { ContactPage } from "./ContactPage";
-import { Teacher } from "@/data/teachers";
 
 const Index = () => {
   const [currentPage, setCurrentPage] = useState("home");
-  const [selectedTeacher, setSelectedTeacher] = useState<Teacher | null>(null);
+  const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleNavigate = (page: string) => {
+  const handleNavigate = (page) => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleViewTeacher = (teacher: Teacher) => {
+  const handleViewTeacher = (teacher) => {
     setSelectedTeacher(teacher);
     setIsModalOpen(true);
   };

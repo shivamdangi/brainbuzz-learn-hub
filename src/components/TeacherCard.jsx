@@ -1,15 +1,9 @@
-import { Star, BookOpen, GraduationCap, Award } from "lucide-react";
+import { Star, BookOpen, Award } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Teacher } from "@/data/teachers";
 
-interface TeacherCardProps {
-  teacher: Teacher;
-  onViewDetails: (teacher: Teacher) => void;
-}
-
-export const TeacherCard = ({ teacher, onViewDetails }: TeacherCardProps) => {
+export const TeacherCard = ({ teacher, onViewDetails }) => {
   return (
     <Card className="overflow-hidden hover:shadow-hover transition-all duration-300 cursor-pointer group">
       <div onClick={() => onViewDetails(teacher)}>

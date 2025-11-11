@@ -1,17 +1,4 @@
-export interface Teacher {
-  id: number;
-  name: string;
-  classes: number[];
-  courses: string[];
-  qualifications: string;
-  experienceYears: number;
-  rating: number;
-  profileImage: string;
-  bio: string;
-  specializations: string[];
-}
-
-export const teachers: Teacher[] = [
+export const teachers = [
   {
     id: 1,
     name: "Dr. Rajesh Kumar",

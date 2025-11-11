@@ -1,15 +1,8 @@
 import { X, Star, BookOpen, Award, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Teacher } from "@/data/teachers";
 
-interface TeacherModalProps {
-  teacher: Teacher | null;
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export const TeacherModal = ({ teacher, isOpen, onClose }: TeacherModalProps) => {
+export const TeacherModal = ({ teacher, isOpen, onClose }) => {
   if (!isOpen || !teacher) return null;
 
   return (
