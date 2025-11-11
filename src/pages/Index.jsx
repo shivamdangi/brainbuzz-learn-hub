@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import { TeacherModal } from "@/components/TeacherModal";
 import { HomePage } from "./HomePage";
 import { ExplorePage } from "./ExplorePage";
@@ -27,17 +28,21 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Navbar currentPage={currentPage} onNavigate={handleNavigate} />
       
-      {currentPage === "home" && (
-        <HomePage onNavigate={handleNavigate} onViewTeacher={handleViewTeacher} />
-      )}
-      {currentPage === "explore" && (
-        <ExplorePage onViewTeacher={handleViewTeacher} />
-      )}
-      {currentPage === "platform" && <PlatformPage />}
-      {currentPage === "contact" && <ContactPage />}
+      <main className="flex-1">
+        {currentPage === "home" && (
+          <HomePage onNavigate={handleNavigate} onViewTeacher={handleViewTeacher} />
+        )}
+        {currentPage === "explore" && (
+          <ExplorePage onViewTeacher={handleViewTeacher} />
+        )}
+        {currentPage === "platform" && <PlatformPage />}
+        {currentPage === "contact" && <ContactPage />}
+      </main>
+
+      <Footer />
 
       <TeacherModal
         teacher={selectedTeacher}
