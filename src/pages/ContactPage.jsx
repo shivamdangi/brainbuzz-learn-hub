@@ -41,7 +41,7 @@ export const ContactPage = () => {
 
     try {
       // Formspree integration
-      const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      const response = await fetch("https://formspree.io/f/xyzlgnkv", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -105,13 +105,12 @@ export const ContactPage = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Email Us</h3>
-                  <p className="text-sm text-muted-foreground">info@brainbuzz.academy</p>
-                  <p className="text-sm text-muted-foreground">support@brainbuzz.academy</p>
+                  <p className="text-sm text-muted-foreground">info.brainbuzz.academy@gmail.com</p>
                 </div>
               </div>
             </Card>
 
-            <Card className="p-6">
+            {/* <Card className="p-6">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
                   <Phone className="h-6 w-6 text-secondary" />
@@ -122,7 +121,7 @@ export const ContactPage = () => {
                   <p className="text-sm text-muted-foreground">Mon-Sat: 9 AM - 7 PM</p>
                 </div>
               </div>
-            </Card>
+            </Card> */}
 
             <Card className="p-6">
               <div className="flex items-start gap-4">
@@ -132,8 +131,8 @@ export const ContactPage = () => {
                 <div>
                   <h3 className="font-semibold mb-1">Visit Us</h3>
                   <p className="text-sm text-muted-foreground">
-                    123 Education Street<br />
-                    Delhi, India 110001
+                    Baraut<br />
+                    Uttar Pradesh, India 250611
                   </p>
                 </div>
               </div>

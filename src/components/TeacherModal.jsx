@@ -2,7 +2,7 @@ import { X, Star, BookOpen, Award, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-export const TeacherModal = ({ teacher, isOpen, onClose }) => {
+export const TeacherModal = ({ teacher, isOpen, onClose , onNavigate}) => {
   if (!isOpen || !teacher) return null;
 
   return (
@@ -109,7 +109,7 @@ export const TeacherModal = ({ teacher, isOpen, onClose }) => {
 
           {/* CTA */}
           <div className="pt-4 flex gap-3">
-            <Button className="flex-1" size="lg">
+            <Button className="flex-1" size="lg"  onClick={() => {onClose();setTimeout(() => onNavigate("contact"), 250);}}>
               Book a Trial Class
             </Button>
             <Button variant="outline" size="lg" onClick={onClose}>

@@ -67,7 +67,7 @@ export const PlatformPage = () => {
       setLoading(false);
       toast({
         title: "Success!",
-        description: "You'll be notified when the platform launches in Q2 2025",
+        description: "You'll be notified when the platform launches in Q1 2026",
       });
       setEmail("");
     }, 1000);
@@ -81,7 +81,7 @@ export const PlatformPage = () => {
         
         <div className="container mx-auto px-4 relative z-10 text-center">
           <div className="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-            <span className="font-semibold">Coming Soon - Q2 2025</span>
+            <span className="font-semibold">Coming Soon - Q1 2026</span>
           </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             Our Learning Platform

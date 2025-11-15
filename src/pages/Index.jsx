@@ -48,6 +48,7 @@ const Index = () => {
         teacher={selectedTeacher}
         isOpen={isModalOpen}
         onClose={handleCloseModal}
+        onNavigate={handleNavigate}
       />
     </div>
   );
