@@ -1,94 +1,118 @@
 import { useState } from "react";
-import { Video, LineChart, Users, MessageSquare, CheckCircle2, Calendar, FileText } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { 
+  Video, 
+  LineChart, 
+  Users, 
+  MessageSquare, 
+  BookOpen, 
+  Calendar, 
+  FileText, 
+  ArrowRight,
+  CheckCircle2
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 
 export const PlatformPage = () => {
-  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email) return;
+    
+    setLoading(true);
+    try {
+      // Here you would typically make an API call to your backend
+      // For now, we'll just show a success message
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      
+      toast({
+        title: 'Success!',
+        description: 'Thank you for subscribing! We\'ll keep you updated.',
+      });
+      setEmail('');
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: 'Failed to subscribe. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
 
   const features = [
     {
-      icon: Video,
-      title: "Live Interactive Classes",
-      description: "Join real-time classes with screen sharing and whiteboard collaboration",
+      icon: BookOpen,
+      title: "Comprehensive Courses",
+      description: "Access all your enrolled courses in one place with organized materials",
       color: "text-primary"
     },
     {
       icon: Users,
       title: "Personalized Dashboard",
-      description: "Track your progress, attendance, and performance metrics",
+      description: "Track your progress, assignments, and performance metrics",
       color: "text-secondary"
     },
     {
       icon: FileText,
-      title: "Assignments & Tests",
-      description: "Practice with curated assignments and take regular assessments",
+      title: "Course Materials",
+      description: "Download lecture notes, assignments, and additional resources",
       color: "text-accent"
     },
     {
       icon: LineChart,
       title: "Performance Analytics",
-      description: "Detailed insights into your learning journey and improvement areas",
+      description: "Get detailed insights into your learning progress and grades",
       color: "text-success"
     },
     {
       icon: MessageSquare,
-      title: "Doubt Resolution",
-      description: "Ask questions anytime and get instant clarifications from teachers",
+      title: "AI Support",
+      description: "Get instant help with your studies through our AI assistant",
       color: "text-primary"
     },
     {
-      icon: Calendar,
-      title: "Smart Scheduling",
-      description: "Flexible class timings that fit your schedule",
+      icon: Users,
+      title: "Messaging",
+      description: "Communicate with instructors and fellow students",
       color: "text-secondary"
     }
   ];
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!email) {
-      toast({
-        title: "Email Required",
-        description: "Please enter your email address",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    setLoading(true);
-
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      toast({
-        title: "Success!",
-        description: "You'll be notified when the platform launches in Q2 2025",
-      });
-      setEmail("");
-    }, 1000);
-  };
-
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative bg-gradient-hero text-white py-20 overflow-hidden">
+      <section className="relative bg-gradient-to-r from-blue-600 to-indigo-800 text-white py-20 overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30" />
         
         <div className="container mx-auto px-4 relative z-10 text-center">
-          <div className="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
-            <span className="font-semibold">Coming Soon - Q2 2025</span>
-          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Our Learning Platform
+            BrainBuzz Learning Platform
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto">
-            Experience the future of online education with our all-in-one learning platform
+            Your all-in-one platform for an enhanced learning experience
           </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="bg-white text-blue-700 hover:bg-blue-50 px-8 py-6 text-lg font-semibold"
+              onClick={handleLoginClick}
+            >
+              Login to Your Account
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </div>
         </div>
       </section>
 

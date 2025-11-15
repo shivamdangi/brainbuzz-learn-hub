@@ -1,0 +1,21 @@
+.logo {
+  height: 32px;
+  margin: 16px;
+  color: white;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}
+
+.ant-layout-header {
+  background: #fff !important;
+  padding: 0 16px !important;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
