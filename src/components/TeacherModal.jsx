@@ -25,11 +25,11 @@ export const TeacherModal = ({ teacher, isOpen, onClose , onNavigate}) => {
         </button>
 
         {/* Header with Image */}
-        <div className="relative h-64 bg-gradient-hero">
+        <div className="relative h-72 bg-gradient-hero">
           <img
             src={teacher.profileImage}
             alt={teacher.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain p-2"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
           <div className="absolute bottom-6 left-6 right-6">

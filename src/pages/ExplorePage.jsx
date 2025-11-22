@@ -133,7 +133,7 @@ export const ExplorePage = ({ onViewTeacher }) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Classes</SelectItem>
-                {[...Array(12)].map((_, i) => (
+                {[...Array(10)].map((_, i) => (
                   <SelectItem key={i + 1} value={String(i + 1)}>
                     Class {i + 1}
                   </SelectItem>

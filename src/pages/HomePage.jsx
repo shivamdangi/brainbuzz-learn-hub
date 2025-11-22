@@ -28,7 +28,7 @@ export const HomePage = ({ onNavigate, onViewTeacher }) => {
               Transform Your Learning Journey
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-white/90">
-              Expert tutoring for Classes 1-12 (CBSE & ICSE)
+              Expert tutoring for Classes 1-10 (CBSE & ICSE)
             </p>
             
             {/* Stats */}

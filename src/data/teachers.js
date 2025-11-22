@@ -1,39 +1,47 @@
 export const teachers = [
   {
     id: 1,
-    name: "Dr. Rajesh Kumar",
-    classes: [9, 10, 11, 12],
-    courses: ["Mathematics", "Physics"],
-    qualifications: "Ph.D. Mathematics, M.Sc. Physics, B.Ed",
-    experienceYears: 12,
-    rating: 4.9,
-    profileImage: "/teachers/rajesh-kumar.jpg",
-    bio: "Passionate about making complex mathematical concepts simple and engaging. Specialized in competitive exam preparation.",
-    specializations: ["IIT-JEE Preparation", "Advanced Mathematics", "Problem Solving"]
+    name: "Ms. Areen",
+    classes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    courses: ["Science"],
+    qualifications: "B.Sc. (pursuing)",
+    experienceYears: 3,
+    rating: 5,
+    profileImage: "/teachers/ms-areen.jpg",
+    bio: "A passionate Science educator currently pursuing a Bachelor's in Science. Builds strong connections with children and creates a joyful, supportive learning environment.",
+    specializations: [
+      "Activity-based learning",
+      "Communication & Public Speaking (certifications)",
+      "Joyful, supportive classroom environment"
+    ]
   },
   {
     id: 2,
-    name: "Ms. Priya Sharma",
-    classes: [6, 7, 8, 9, 10],
-    courses: ["English", "Hindi"],
-    qualifications: "M.A. English Literature, B.Ed, CELTA Certified",
-    experienceYears: 8,
-    rating: 4.8,
-    profileImage: "/teachers/priya-sharma.jpg",
-    bio: "Dedicated to improving language proficiency and creative writing skills. Focus on communication and expression.",
-    specializations: ["Grammar Excellence", "Creative Writing", "Public Speaking"]
+    name: "Ms. Zeba",
+    classes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    courses: ["English", "Spoken English", "Grammar"],
+    qualifications: "M.A. (English), B.Ed., M.Ed., Spoken English & Grammar Expert",
+    experienceYears: 15,
+    rating: 5,
+    profileImage: "/founder/zeba.jpg",
+    bio: "With over 15 years of expertise in Spoken English and Grammar, Ms. Zeba founded BrainBuzz Academy with a vision to make quality education accessible to every student. Her passion for teaching and commitment to excellence has helped hundreds of students achieve their academic dreams.",
+    specializations: ["Spoken English", "Grammar Mastery", "Public Speaking & Confidence Building"]
   },
   {
     id: 3,
-    name: "Mr. Amit Patel",
-    classes: [8, 9, 10, 11, 12],
-    courses: ["Chemistry", "Science"],
-    qualifications: "M.Sc. Chemistry, B.Ed",
-    experienceYears: 10,
-    rating: 4.7,
-    profileImage: "/teachers/amit-patel.jpg",
-    bio: "Making chemistry fun through practical examples and real-world applications. Expert in CBSE curriculum.",
-    specializations: ["Organic Chemistry", "Lab Techniques", "Board Exam Prep"]
+    name: "Ms. Nisha Sharma",
+    classes: [6, 7, 8, 9, 10],
+    courses: ["Social Studies"],
+    qualifications: "B.Sc., B.Ed",
+    experienceYears: 9,
+    rating: 5,
+    profileImage: "/teachers/nisha-sharma.jpg",
+    bio: "Experienced Social Studies educator with a passion for concept clarity and joyful learning. Blends real-life examples, visuals, and practice to make topics easy to understand and remember.",
+    specializations: [
+      "Concept-based Teaching",
+      "Activity & Experiment-driven Lessons",
+      "Exam Strategy & Revision Planning"
+    ]
   },
   {
     id: 4,

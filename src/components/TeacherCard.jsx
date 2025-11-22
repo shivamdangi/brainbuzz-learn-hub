@@ -8,11 +8,11 @@ export const TeacherCard = ({ teacher, onViewDetails }) => {
     <Card className="overflow-hidden hover:shadow-hover transition-all duration-300 cursor-pointer group">
       <div onClick={() => onViewDetails(teacher)}>
         {/* Image */}
-        <div className="relative h-48 overflow-hidden bg-muted">
+        <div className="relative h-64 overflow-hidden bg-muted">
           <img
             src={teacher.profileImage}
             alt={teacher.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-contain p-2 transition-transform duration-300"
           />
           <div className="absolute top-3 right-3 flex items-center gap-1 bg-background/95 backdrop-blur-sm px-2 py-1 rounded-full">
             <Star className="h-4 w-4 fill-accent text-accent" />
