@@ -110,18 +110,19 @@ export const ContactPage = () => {
               </div>
             </Card>
 
-            {/* <Card className="p-6">
+            <Card className="p-6">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
                   <Phone className="h-6 w-6 text-secondary" />
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Call Us</h3>
-                  <p className="text-sm text-muted-foreground">+91 98765 43210</p>
-                  <p className="text-sm text-muted-foreground">Mon-Sat: 9 AM - 7 PM</p>
+                  <p className="text-sm text-muted-foreground">+91-9690724441</p>
+                  <p className="text-sm text-muted-foreground">(Mobile/WhatsApp)</p>
+                  <p className="text-sm text-muted-foreground">Mon-Sat: 9AM - 7PM</p>
                 </div>
               </div>
-            </Card> */}
+            </Card>
 
             <Card className="p-6">
               <div className="flex items-start gap-4">
@@ -170,7 +171,7 @@ export const ContactPage = () => {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleChange}
-                      placeholder="John"
+                      placeholder="Madhav"
                       required
                     />
                   </div>
@@ -182,7 +183,7 @@ export const ContactPage = () => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleChange}
-                      placeholder="Doe"
+                      placeholder="Alreja"
                     />
                   </div>
                 </div>
@@ -196,7 +197,7 @@ export const ContactPage = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="john.doe@example.com"
+                    placeholder="madhav.alreja@example.com"
                     required
                   />
                 </div>
@@ -210,7 +211,7 @@ export const ContactPage = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+91 98765 43210"
+                    placeholder="+91 98765 XXXXX"
                   />
                 </div>
 
@@ -222,7 +223,7 @@ export const ContactPage = () => {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    placeholder="How can we help you?"
+                    // placeholder="How can we help 
                   />
                 </div>
 
@@ -234,7 +235,7 @@ export const ContactPage = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell us more about your inquiry..."
+                    // placeholder="Tell us more about your inquiry..."
                     rows={6}
                     required
                   />
