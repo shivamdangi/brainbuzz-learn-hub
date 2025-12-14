@@ -22,7 +22,7 @@ const LoginPage = () => {
       formData.append('username', username);
       formData.append('password', password);
       
-      const response = await fetch('http://localhost:8000/token', {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000'}token`, {
         method: 'POST',
         body: formData,
       });
