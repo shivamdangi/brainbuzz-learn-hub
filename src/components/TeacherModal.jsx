@@ -2,7 +2,7 @@ import { X, Star, BookOpen, Award, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-export const TeacherModal = ({ teacher, isOpen, onClose }) => {
+export const TeacherModal = ({ teacher, isOpen, onClose , onNavigate}) => {
   if (!isOpen || !teacher) return null;
 
   return (
@@ -25,11 +25,11 @@ export const TeacherModal = ({ teacher, isOpen, onClose }) => {
         </button>
 
         {/* Header with Image */}
-        <div className="relative h-64 bg-gradient-hero">
+        <div className="relative h-72 bg-gradient-hero">
           <img
             src={teacher.profileImage}
             alt={teacher.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain p-2"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
           <div className="absolute bottom-6 left-6 right-6">
@@ -109,7 +109,7 @@ export const TeacherModal = ({ teacher, isOpen, onClose }) => {
 
           {/* CTA */}
           <div className="pt-4 flex gap-3">
-            <Button className="flex-1" size="lg">
+            <Button className="flex-1" size="lg"  onClick={() => {onClose();setTimeout(() => onNavigate("contact"), 250);}}>
               Book a Trial Class
             </Button>
             <Button variant="outline" size="lg" onClick={onClose}>

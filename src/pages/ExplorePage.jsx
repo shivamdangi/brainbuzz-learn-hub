@@ -13,6 +13,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Card } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
 export const ExplorePage = ({ onViewTeacher }) => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,6 +22,7 @@ export const ExplorePage = ({ onViewTeacher }) => {
   const [selectedSubject, setSelectedSubject] = useState("all");
   const [coursesExpanded, setCoursesExpanded] = useState(true);
   const [teachersExpanded, setTeachersExpanded] = useState(true);
+  const subjects = ["Hindi", "English", "Mathematics", "Science"];
 
   // Extract unique subjects from both courses and teachers
   const allSubjects = useMemo(() => {
@@ -130,7 +133,7 @@ export const ExplorePage = ({ onViewTeacher }) => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Classes</SelectItem>
-                {[...Array(12)].map((_, i) => (
+                {[...Array(10)].map((_, i) => (
                   <SelectItem key={i + 1} value={String(i + 1)}>
                     Class {i + 1}
                   </SelectItem>
@@ -174,6 +177,26 @@ export const ExplorePage = ({ onViewTeacher }) => {
           </p>
         </div>
 
+        {/* Subjects */}
+        <div className="mb-12">
+          <div className="flex items-center gap-2 mb-6">
+            <BookOpen className="h-6 w-6 text-primary" />
+            <h2 className="text-2xl font-bold">Subjects</h2>
+          </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {subjects.map((subject) => (
+              <Card key={subject} className="p-6">
+                <h3 className="text-xl font-bold mb-4">{subject}</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="secondary" className="text-xs">
+                    Class 1-10
+                  </Badge>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+
         {/* Courses Section */}
         {filteredCourses.length > 0 && (
           <div className="mb-12">
@@ -203,17 +226,15 @@ export const ExplorePage = ({ onViewTeacher }) => {
               </Button>
             </div>
             {coursesExpanded && (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in-0 slide-in-from-top-2 duration-300">
-                {filteredCourses.map((course) => (
-                  <CourseCard
-                    key={course.id}
-                    course={course}
-                    onViewDetails={(course) => {
-                      // You can add course modal/view logic here if needed
-                      console.log("View course:", course);
-                    }}
-                  />
-                ))}
+              <div className="flex items-center justify-center py-16">
+                <div className="text-center">
+                  <div className="text-3xl md:text-5xl italic font-semibold text-foreground/80">
+                    Details Coming Soon
+                  </div>
+                  <p className="mt-2 text-sm md:text-base text-muted-foreground">
+                    We are preparing an amazing courses experience for you.
+                  </p>
+                </div>
               </div>
             )}
           </div>
@@ -248,14 +269,15 @@ export const ExplorePage = ({ onViewTeacher }) => {
               </Button>
             </div>
             {teachersExpanded && (
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in-0 slide-in-from-top-2 duration-300">
-                {filteredTeachers.map((teacher) => (
-                  <TeacherCard
-                    key={teacher.id}
-                    teacher={teacher}
-                    onViewDetails={onViewTeacher}
-                  />
-                ))}
+              <div className="flex items-center justify-center py-16">
+                <div className="text-center">
+                  <div className="text-3xl md:text-5xl italic font-semibold text-foreground/80">
+                    Details Coming Soon
+                  </div>
+                  <p className="mt-2 text-sm md:text-base text-muted-foreground">
+                    Teacher profiles and filters will be available shortly.
+                  </p>
+                </div>
               </div>
             )}
           </div>

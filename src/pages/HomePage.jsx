@@ -10,10 +10,10 @@ export const HomePage = ({ onNavigate, onViewTeacher }) => {
   const displayedTestimonials = testimonials.slice(0, 3);
 
   const stats = [
-    { icon: Users, label: "Active Students", value: "100+", color: "text-primary" },
-    { icon: GraduationCap, label: "Expert Teachers", value: "20+", color: "text-secondary" },
-    { icon: TrendingUp, label: "Success Rate", value: "95%", color: "text-success" },
-    { icon: Award, label: "Years Experience", value: "10+", color: "text-accent" },
+    { icon: Users, label: "Active Students", value: "100+", color: "black" },
+    { icon: GraduationCap, label: "Expert Teachers", value: "20+", color: "black" },
+    { icon: TrendingUp, label: "Success Rate", value: "95%", color: "black" },
+    { icon: Award, label: "Years Experience", value: "10+", color: "black" },
   ];
 
   return (
@@ -28,7 +28,7 @@ export const HomePage = ({ onNavigate, onViewTeacher }) => {
               Transform Your Learning Journey
             </h1>
             <p className="text-xl md:text-2xl mb-8 text-white/90">
-              Expert tutoring for Classes 1-12 (CBSE & ICSE)
+              Expert tutoring for Classes 1-10 (CBSE & ICSE)
             </p>
             
             {/* Stats */}
@@ -49,7 +49,7 @@ export const HomePage = ({ onNavigate, onViewTeacher }) => {
                 onClick={() => onNavigate("explore")}
                 className="text-lg px-8"
               >
-                Explore Teachers
+                Explore More
               </Button>
               <Button
                 size="lg"

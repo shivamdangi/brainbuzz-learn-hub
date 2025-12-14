@@ -41,7 +41,7 @@ export const ContactPage = () => {
 
     try {
       // Formspree integration
-      const response = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      const response = await fetch("https://formspree.io/f/xyzlgnkv", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -105,8 +105,7 @@ export const ContactPage = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Email Us</h3>
-                  <p className="text-sm text-muted-foreground">info@brainbuzz.academy</p>
-                  <p className="text-sm text-muted-foreground">support@brainbuzz.academy</p>
+                  <p className="text-sm text-muted-foreground">info.brainbuzz.academy@gmail.com</p>
                 </div>
               </div>
             </Card>
@@ -118,8 +117,9 @@ export const ContactPage = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold mb-1">Call Us</h3>
-                  <p className="text-sm text-muted-foreground">+91 98765 43210</p>
-                  <p className="text-sm text-muted-foreground">Mon-Sat: 9 AM - 7 PM</p>
+                  <p className="text-sm text-muted-foreground">+91-9690724441</p>
+                  <p className="text-sm text-muted-foreground">(Mobile/WhatsApp)</p>
+                  <p className="text-sm text-muted-foreground">Mon-Sat: 9AM - 7PM</p>
                 </div>
               </div>
             </Card>
@@ -132,8 +132,8 @@ export const ContactPage = () => {
                 <div>
                   <h3 className="font-semibold mb-1">Visit Us</h3>
                   <p className="text-sm text-muted-foreground">
-                    123 Education Street<br />
-                    Delhi, India 110001
+                    Baraut<br />
+                    Uttar Pradesh, India 250611
                   </p>
                 </div>
               </div>
@@ -146,7 +146,7 @@ export const ContactPage = () => {
                 <iframe
                   width="100%"
                   height="100%"
-                  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                  src="https://youtube.com/embed/LXzh0BO1HwI?feature=share"
                   title="BrainBuzz Academy Introduction"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -171,7 +171,7 @@ export const ContactPage = () => {
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleChange}
-                      placeholder="John"
+                      placeholder="Madhav"
                       required
                     />
                   </div>
@@ -183,7 +183,7 @@ export const ContactPage = () => {
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleChange}
-                      placeholder="Doe"
+                      placeholder="Alreja"
                     />
                   </div>
                 </div>
@@ -197,7 +197,7 @@ export const ContactPage = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="john.doe@example.com"
+                    placeholder="madhav.alreja@example.com"
                     required
                   />
                 </div>
@@ -211,7 +211,7 @@ export const ContactPage = () => {
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
-                    placeholder="+91 98765 43210"
+                    placeholder="+91 98765 XXXXX"
                   />
                 </div>
 
@@ -223,7 +223,7 @@ export const ContactPage = () => {
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    placeholder="How can we help you?"
+                    // placeholder="How can we help 
                   />
                 </div>
 
@@ -235,7 +235,7 @@ export const ContactPage = () => {
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Tell us more about your inquiry..."
+                    // placeholder="Tell us more about your inquiry..."
                     rows={6}
                     required
                   />
