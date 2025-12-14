@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Outlet, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Outlet, Link, useLocation, useParams } from 'react-router-dom';
 import { Card, Button, Tabs, Skeleton, Empty, message } from 'antd';
 import { BookOutlined, FileTextOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import api from '../../services/api';
@@ -11,7 +11,8 @@ const Courses = () => {
   const [courses, setCourses] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const courseId = location.pathname.split('/').pop();
+  const { courseId } = useParams();
+  const courseIdNum = courseId ? Number(courseId) : null;
   
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
@@ -30,7 +31,7 @@ const Courses = () => {
     fetchEnrolledCourses();
   }, []);
 
-  if (courseId && courseId !== 'courses') {
+  if (courseId && !Number.isNaN(courseIdNum)) {
     return (
       <div className="course-detail">
         <Tabs 
@@ -69,6 +70,11 @@ const Courses = () => {
         <Outlet />
       </div>
     );
+  }
+
+  if (courseId && Number.isNaN(courseIdNum)) {
+    navigate('/student/dashboard/courses', { replace: true });
+    return null;
   }
 
   return (

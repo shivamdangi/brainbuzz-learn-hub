@@ -1,5 +1,5 @@
 // src/layouts/StudentLayout.jsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Layout, 
@@ -28,9 +28,40 @@ const { Header, Sider, Content } = Layout;
 const { Title } = Typography;
 
 const StudentLayout = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setSidebarVisible(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Call once to set initial state
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const toggleSidebar = () => {
+    if (isMobile) {
+      setSidebarVisible(!sidebarVisible);
+    } else {
+      setCollapsed(!collapsed);
+    }
+  };
+
+  const closeSidebar = () => {
+    if (isMobile) {
+      setSidebarVisible(false);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
@@ -87,17 +118,24 @@ const StudentLayout = () => {
   );
 
   return (
-    <Layout className="student-layout">
+    <Layout className="student-layout" style={{ minHeight: '100vh', overflow: 'hidden' }}>
+      {/* Mobile backdrop */}
+      <div 
+        className={`sidebar-backdrop ${isMobile && sidebarVisible ? 'visible' : ''}`}
+        onClick={closeSidebar}
+      />
+      
       <Sider 
         trigger={null} 
         collapsible 
-        collapsed={collapsed}
+        collapsed={isMobile ? false : collapsed}
         width={250}
-        className="sidebar"
+        className={`sidebar ${isMobile ? 'mobile-sidebar' : ''} ${sidebarVisible ? 'sidebar-visible' : ''}`}
+        style={{ zIndex: 1002 }}
       >
         <div className="logo">
           <Title level={4} className="logo-text">
-            {collapsed ? 'BB' : 'BrainBuzz'}
+            {isMobile ? 'BrainBuzz' : (collapsed ? 'BrainBuzz' : 'BrainBuzz')}
           </Title>
         </div>
         
@@ -111,7 +149,12 @@ const StudentLayout = () => {
             <Menu.Item 
               key={item.key} 
               icon={item.icon}
-              onClick={() => navigate(item.path)}
+              onClick={() => {
+                navigate(item.path);
+                if (isMobile) {
+                  closeSidebar();
+                }
+              }}
             >
               {item.label}
             </Menu.Item>
@@ -120,12 +163,12 @@ const StudentLayout = () => {
       </Sider>
       
       <Layout>
-        <Header className="header">
+        <Header className={`header ${!isMobile && collapsed ? 'collapsed' : ''}`}>
           <div className="header-left">
             <Button
               type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
+              icon={<MenuUnfoldOutlined />}
+              onClick={toggleSidebar}
               className="menu-collapse"
             />
             <div className="breadcrumb">
@@ -148,8 +191,22 @@ const StudentLayout = () => {
           </div>
         </Header>
         
-        <Content className="content">
-          <Outlet />
+        <Content 
+          className={`content ${sidebarVisible ? 'content-pushed' : ''}`}
+          style={{ 
+            height: 'calc(100vh - 64px)',
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            marginLeft: isMobile ? 0 : (collapsed ? '80px' : '250px'),
+            transition: 'margin 0.2s',
+            width: isMobile ? '100%' : `calc(100% - ${collapsed ? 80 : 250}px)`
+          }}
+          onClick={isMobile && sidebarVisible ? closeSidebar : undefined}
+        >
+          <div style={{ flex: 1, overflowY: 'auto' }}>
+            <Outlet />
+          </div>
         </Content>
       </Layout>
     </Layout>

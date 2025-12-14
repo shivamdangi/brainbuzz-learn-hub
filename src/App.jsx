@@ -15,6 +15,9 @@ import UserManagement from './pages/admin/UserManagement';
 import CourseManagement from './pages/admin/CourseManagement';
 import TeacherDashboard from './pages/teacher/Dashboard';
 import TeacherCourses from './pages/teacher/Courses';
+import TeacherAnnouncements from './pages/teacher/Announcements';
+import TeacherStudents from './pages/teacher/Students';
+import StudentAnnouncements from './pages/student/Announcements';
 
 const queryClient = new QueryClient();
 
@@ -41,6 +44,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* Legacy redirects */}
+          <Route path="/student/courses/*" element={<Navigate to="/student/dashboard/courses" replace />} />
           {/* Public Routes */}
           <Route path="/" element={<Index />} />
           <Route path="/login" element={<LoginPage />} />
@@ -79,9 +84,21 @@ const App = () => (
               path="courses/:courseId" 
               element={<TeacherCourses />} 
             />
+            <Route path="courses/:courseId/*" element={<TeacherCourses />}>
+              <Route index element={<Navigate to="announcements" replace />} />
+              <Route path="announcements" element={<TeacherAnnouncements />} />
+              <Route path="students" element={<TeacherStudents />} />
+            </Route>
             <Route 
-              path="courses/:courseId/*" 
-              element={<TeacherCourses />} 
+              path="messages" 
+              element={
+                <div className="flex items-center justify-center h-full">
+                  <div className="text-center">
+                    <h3 className="text-2xl font-bold mb-4">Messaging</h3>
+                    <p className="text-gray-600">This feature is coming soon!</p>
+                  </div>
+                </div>
+              } 
             />
             
           </Route>
@@ -112,33 +129,28 @@ const App = () => (
                 </ProtectedRoute>
               } 
             />
-            <Route 
-              path="courses/:courseId/announcements" 
-              element={
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold mb-4">Course Announcements</h3>
-                  <p>Announcements will appear here.</p>
-                </div>
-              } 
-            />
-            <Route 
-              path="courses/:courseId/materials" 
-              element={
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold mb-4">Course Materials</h3>
-                  <p>Course materials will appear here.</p>
-                </div>
-              } 
-            />
-            <Route 
-              path="courses/:courseId/support" 
-              element={
-                <div className="p-4">
-                  <h3 className="text-xl font-semibold mb-4">Course Support</h3>
-                  <p>Support information will appear here.</p>
-                </div>
-              } 
-            />
+            <Route path="courses/:courseId/*" element={<StudentCourses />}>
+              <Route index element={<Navigate to="announcements" replace />} />
+              <Route path="announcements" element={<StudentAnnouncements />} />
+              <Route 
+                path="materials" 
+                element={
+                  <div className="p-4">
+                    <h3 className="text-xl font-semibold mb-4">Course Materials</h3>
+                    <p>Course materials will appear here.</p>
+                  </div>
+                } 
+              />
+              <Route 
+                path="support" 
+                element={
+                  <div className="p-4">
+                    <h3 className="text-xl font-semibold mb-4">Course Support</h3>
+                    <p>Support information will appear here.</p>
+                  </div>
+                } 
+              />
+            </Route>
             <Route 
               path="ai-support" 
               element={

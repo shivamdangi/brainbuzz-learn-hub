@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Outlet, Link, useLocation } from 'react-router-dom';
+import { useNavigate, Outlet, Link, useLocation, useParams } from 'react-router-dom';
 import { Card, Button, Tabs, Skeleton, Empty, message, Result } from 'antd';
-import { BookOutlined, FileTextOutlined, TeamOutlined, CalendarOutlined, LockOutlined } from '@ant-design/icons';
+import { BookOutlined, FileTextOutlined, TeamOutlined, CalendarOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import api from '../../services/api';
 
@@ -15,7 +15,7 @@ const TeacherCourses = () => {
   const [isAuthorized, setIsAuthorized] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
-  const courseId = location.pathname.split('/').pop();
+  const { courseId } = useParams();
   
   // Check if user is a teacher
   useEffect(() => {
@@ -94,7 +94,7 @@ const TeacherCourses = () => {
     );
   }
 
-  if (courseId && courseId !== 'courses') {
+  if (courseId) {
     return (
       <div className="course-detail">
         <Tabs 

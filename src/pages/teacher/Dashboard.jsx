@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { Layout, Menu, Button } from 'antd';
 import {
@@ -10,13 +10,44 @@ import {
   LogoutOutlined,
   DashboardOutlined,
 } from '@ant-design/icons';
+import './Dashboard.css';
 
 const { Header, Sider, Content } = Layout;
 
 const TeacherDashboard = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [sidebarVisible, setSidebarVisible] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setSidebarVisible(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const toggleSidebar = () => {
+    if (isMobile) {
+      setSidebarVisible(!sidebarVisible);
+    } else {
+      setCollapsed(!collapsed);
+    }
+  };
+
+  const closeSidebar = () => {
+    if (isMobile) {
+      setSidebarVisible(false);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
@@ -45,29 +76,70 @@ const TeacherDashboard = () => {
     },
   ];
 
-  const selectedKey = menuItems.find(item => 
-    location.pathname.startsWith(item.path)
-  )?.key || '1';
+  const selectedKey =
+    menuItems.find((item) => location.pathname.startsWith(item.path))?.key || '1';
 
   return (
     <Layout className="min-h-screen">
-      <Sider trigger={null} collapsible collapsed={collapsed} theme="light">
-        <div className="h-12 m-4 flex items-center justify-center">
-          <h1 className={`text-xl font-bold ${collapsed ? 'hidden' : 'block'}`}>
-            Teacher Portal
+      <div
+        className={`sidebar-backdrop ${isMobile && sidebarVisible ? 'visible' : ''}`}
+        onClick={closeSidebar}
+      />
+      <Sider
+        trigger={null}
+        collapsible
+        collapsed={isMobile ? false : collapsed}
+        width={250}
+        className={`bg-white shadow-lg sidebar ${isMobile ? 'mobile-sidebar' : ''} ${sidebarVisible ? 'sidebar-visible' : ''}`}
+        breakpoint="lg"
+        collapsedWidth="0"
+        onBreakpoint={(broken) => {
+          if (broken) {
+            setCollapsed(true);
+          }
+        }}
+        style={{ zIndex: 1002 }}
+      >
+        <div className="flex items-center justify-between h-14 sm:h-16 bg-blue-600 text-white px-4">
+          <h1 className="text-lg sm:text-xl font-bold">
+            {collapsed ? 'BB' : 'BrainBuzz'}
           </h1>
+          {!collapsed && !isMobile && (
+            <Button
+              type="text"
+              icon={<MenuFoldOutlined className="text-white" />}
+              onClick={toggleSidebar}
+              className="h-8 w-8 flex items-center justify-center"
+            />
+          )}
         </div>
+
         <Menu
           theme="light"
           mode="inline"
-          defaultSelectedKeys={[selectedKey]}
-          items={menuItems.map(item => ({
-            key: item.key,
-            icon: item.icon,
-            label: <Link to={item.path}>{item.label}</Link>,
-          }))}
-        />
-        <div className="absolute bottom-0 w-full p-4">
+          selectedKeys={[selectedKey]}
+          className="sidebar-menu border-r-0"
+        >
+          {menuItems.map((item) => (
+            <Menu.Item 
+              key={item.key}
+              icon={item.icon}
+              onClick={() => {
+                navigate(item.path);
+                if (isMobile) {
+                  closeSidebar();
+                } else if (!collapsed) {
+                  setCollapsed(true);
+                }
+              }}
+              className={selectedKey === item.key ? 'ant-menu-item-selected' : ''}
+            >
+              {item.label}
+            </Menu.Item>
+          ))}
+        </Menu>
+
+        <div className="p-4 border-t">
           <Button
             type="text"
             icon={<LogoutOutlined />}
@@ -78,22 +150,39 @@ const TeacherDashboard = () => {
           </Button>
         </div>
       </Sider>
-      <Layout>
-        <Header className="bg-white p-0 shadow-sm flex items-center">
+
+      <Layout className="w-full">
+        <Header className="bg-white p-0 shadow-sm flex items-center h-16">
           <Button
             type="text"
-            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-            onClick={() => setCollapsed(!collapsed)}
-            className="h-16 w-16"
+            icon={
+              isMobile
+                ? sidebarVisible
+                  ? <MenuFoldOutlined />
+                  : <MenuUnfoldOutlined />
+                : collapsed
+                  ? <MenuUnfoldOutlined />
+                  : <MenuFoldOutlined />
+            }
+            onClick={toggleSidebar}
+            className="h-12 w-12 sm:h-16 sm:w-16"
           />
           <div className="flex-1" />
-          <div className="mr-4 flex items-center">
-            <span className="mr-2">
+          <div className="mr-2 sm:mr-4 flex items-center">
+            <span className="hidden sm:inline mr-2">
               <UserOutlined /> {localStorage.getItem('user_email')}
+            </span>
+            <span className="sm:hidden">
+              <UserOutlined />
             </span>
           </div>
         </Header>
-        <Content className="m-4 p-6 bg-white rounded-lg shadow-sm">
+
+        <Content
+          className="m-2 sm:m-4 p-4 sm:p-6 bg-white rounded-lg shadow-sm"
+          style={{ width: '100%', maxWidth: '100%' }}
+          onClick={isMobile && sidebarVisible ? closeSidebar : undefined}
+        >
           <Outlet />
         </Content>
       </Layout>

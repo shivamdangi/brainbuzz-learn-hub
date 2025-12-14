@@ -1,47 +1,66 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Statistic } from 'antd';
 import { UserOutlined, BookOutlined, TeamOutlined } from '@ant-design/icons';
+import './Dashboard.css';
+import api from '../../services/api';
 
 const AdminDashboard = () => {
-  // These would come from your API
-  const stats = {
-    totalUsers: 0,
-    totalCourses: 0,
-    totalStudents: 0,
-  };
+  const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState({
+    total_users: 0,
+    total_courses: 0,
+    total_students: 0,
+    total_teachers: 0,
+  });
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setLoading(true);
+        const res = await api.get('/admin/stats');
+        setStats(res.data || {});
+      } catch (e) {
+        // silent fail keeps previous zeros
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, []);
 
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
-      <Row gutter={16}>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Users"
-              value={stats.totalUsers}
-              prefix={<UserOutlined />}
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Courses"
-              value={stats.totalCourses}
-              prefix={<BookOutlined />}
-            />
-          </Card>
-        </Col>
-        <Col span={8}>
-          <Card>
-            <Statistic
-              title="Total Students"
-              value={stats.totalStudents}
-              prefix={<TeamOutlined />}
-            />
-          </Card>
-        </Col>
-      </Row>
+    <div className="admin-dashboard">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6">Admin Dashboard</h1>
+      <div className="stats-grid">
+        <Card className="stat-card" loading={loading}>
+          <Statistic
+            title="Total Users"
+            value={stats.total_users || 0}
+            prefix={<UserOutlined />}
+          />
+        </Card>
+        <Card className="stat-card" loading={loading}>
+          <Statistic
+            title="Total Courses"
+            value={stats.total_courses || 0}
+            prefix={<BookOutlined />}
+          />
+        </Card>
+        <Card className="stat-card" loading={loading}>
+          <Statistic
+            title="Total Students"
+            value={stats.total_students || 0}
+            prefix={<TeamOutlined />}
+          />
+        </Card>
+        <Card className="stat-card" loading={loading}>
+          <Statistic
+            title="Total Teachers"
+            value={stats.total_teachers || 0}
+            prefix={<TeamOutlined />}
+          />
+        </Card>
+      </div>
     </div>
   );
 };

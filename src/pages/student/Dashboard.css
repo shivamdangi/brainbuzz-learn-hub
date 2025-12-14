@@ -2,11 +2,26 @@
 .dashboard {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 16px;
+}
+
+@media (max-width: 640px) {
+  .dashboard {
+    padding: 0 12px;
+  }
 }
 
 .stat-card {
   height: 100%;
   transition: all 0.3s;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+@media (max-width: 640px) {
+  .stat-card {
+    margin-bottom: 12px;
+  }
 }
 
 .stat-card:hover {
@@ -38,11 +53,19 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 16px;
+  padding: 20px 16px;
   border: 1px solid #f0f0f0;
-  border-radius: 8px;
+  border-radius: 12px;
   text-align: center;
   transition: all 0.3s;
+  min-height: 100px;
+}
+
+@media (max-width: 640px) {
+  .quick-action {
+    padding: 16px 12px;
+    min-height: 80px;
+  }
 }
 
 .quick-action:hover {
@@ -58,10 +81,19 @@
 
 .deadline-item {
   display: flex;
-  align-items: center;
-  padding: 12px;
-  border-radius: 8px;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 12px;
   transition: all 0.3s;
+  gap: 12px;
+}
+
+@media (max-width: 640px) {
+  .deadline-item {
+    padding: 12px;
+    flex-direction: column;
+    gap: 8px;
+  }
 }
 
 .deadline-item:hover {
@@ -69,16 +101,23 @@
 }
 
 .deadline-date {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   background: #f0f9ff;
-  border-radius: 8px;
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-right: 16px;
   flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+  .deadline-date {
+    width: 50px;
+    height: 50px;
+    align-self: flex-start;
+  }
 }
 
 .deadline-date .date {

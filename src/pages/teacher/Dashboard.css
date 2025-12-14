@@ -1,0 +1,86 @@
+/* Sidebar base (match student) */
+.sidebar {
+  background: #001529;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1001;
+  box-shadow: 2px 0 8px 0 rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease-in-out, width 0.2s;
+  overflow-y: auto;
+}
+
+/* Mobile sidebar behaviors (match student) */
+.mobile-sidebar {
+  transform: translateX(-100%);
+  z-index: 1002;
+}
+
+.mobile-sidebar.sidebar-visible {
+  transform: translateX(0);
+}
+
+/* Backdrop for mobile (match student) */
+.sidebar-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar-backdrop.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Logo block (match student) */
+.logo {
+  height: 64px;
+  padding: 16px;
+  background: #002140;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-text {
+  color: white !important;
+  margin: 0;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+/* Menu styling (match student) */
+.sidebar-menu {
+  border-right: none;
+  padding: 16px 0;
+}
+
+/* Small-screen tweaks (match student) */
+@media (max-width: 767.98px) {
+  .sidebar {
+    width: 280px !important;
+    max-width: 85vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 260px !important;
+    max-width: 80vw;
+  }
+
+  .logo {
+    height: 56px;
+    padding: 12px;
+  }
+
+  .logo-text {
+    font-size: 16px;
+  }
+}
