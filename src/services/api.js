@@ -1,7 +1,7 @@
 import axios from 'axios';
 //here i need to use the process.env.REACT_APP_API_BASE_URL
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000', // Your FastAPI backend URL
+  baseURL: import.meta.env.REACT_APP_API_BASE_URL || 'http://localhost:8000', // Your FastAPI backend URL
   headers: {
     'Content-Type': 'application/json',
   },
