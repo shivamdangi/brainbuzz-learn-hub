@@ -17,6 +17,15 @@
   overflow-y: auto;
 }
 
+/* Desktop sidebar should not be fixed - should be part of normal layout flow */
+@media (min-width: 769px) {
+  .sidebar {
+    position: relative !important;
+    z-index: auto;
+    box-shadow: none;
+  }
+}
+
 /* Mobile sidebar styles */
 .mobile-sidebar {
   transform: translateX(-100%);

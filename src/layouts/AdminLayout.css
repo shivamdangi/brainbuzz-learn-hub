@@ -103,6 +103,14 @@
   overflow-y: auto;
 }
 
+@media (min-width: 769px) {
+  .sidebar {
+    position: relative !important;
+    z-index: auto;
+    box-shadow: none;
+  }
+}
+
 .mobile-sidebar {
   transform: translateX(-100%);
   z-index: 1002;
