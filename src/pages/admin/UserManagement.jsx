@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, Select, message, Space, Input as AntInput, Descriptions, Tag } from 'antd';
-import { PlusOutlined, CopyOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, CopyOutlined, SearchOutlined, UserOutlined } from '@ant-design/icons';
 import api from '../../services/api';
 
 const { Option } = Select;
@@ -11,8 +11,10 @@ const UserManagement = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
+  const [isPasswordModalVisible, setIsPasswordModalVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
   const [form] = Form.useForm();
+  const [passwordForm] = Form.useForm();
   const [searchText, setSearchText] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
 
@@ -43,15 +45,6 @@ const UserManagement = () => {
     setFilteredUsers(filtered);
   };
 
-  const copyPassword = async (password) => {
-    try {
-      await navigator.clipboard.writeText(password);
-      message.success('Password copied to clipboard!');
-    } catch (err) {
-      message.error('Failed to copy password');
-    }
-  };
-
   const copyToClipboard = async (text, label) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -64,6 +57,26 @@ const UserManagement = () => {
   const handleUserClick = (user) => {
     setSelectedUser(user);
     setIsDetailsModalVisible(true);
+  };
+
+  const handleChangePasswordClick = () => {
+    setIsDetailsModalVisible(false);
+    setTimeout(() => {
+      setIsPasswordModalVisible(true);
+    }, 100);
+  };
+
+  const handlePasswordChange = async (values) => {
+    try {
+      await api.put(`/admin/users/${selectedUser.id}/password`, {
+        password: values.password
+      });
+      message.success('Password changed successfully');
+      setIsPasswordModalVisible(false);
+      passwordForm.resetFields();
+    } catch (error) {
+      message.error('Failed to change password');
+    }
   };
 
   const fetchUsers = async () => {
@@ -94,18 +107,16 @@ const UserManagement = () => {
     { title: 'Role', dataIndex: 'role', key: 'role' },
     { title: 'Full Name', dataIndex: 'full_name', key: 'full_name' },
     {
-      title: 'Password',
-      dataIndex: 'password',
-      key: 'password',
-      render: (password) => (
+      title: 'Actions',
+      key: 'actions',
+      render: (_, record) => (
         <Space>
-          <span style={{ fontFamily: 'monospace', fontSize: '12px' }}>{password}</span>
           <Button
             type="text"
             size="small"
-            icon={<CopyOutlined />}
-            onClick={() => copyPassword(password)}
-            title="Copy password"
+            icon={<EditOutlined />}
+            onClick={() => handleUserClick(record)}
+            title="View details and change password"
           />
         </Space>
       ),
@@ -219,6 +230,13 @@ const UserManagement = () => {
         open={isDetailsModalVisible}
         onCancel={() => setIsDetailsModalVisible(false)}
         footer={[
+          <Button 
+            key="changePassword" 
+            type="primary" 
+            onClick={handleChangePasswordClick}
+          >
+            Change Password
+          </Button>,
           <Button key="close" onClick={() => setIsDetailsModalVisible(false)}>
             Close
           </Button>,
@@ -262,20 +280,6 @@ const UserManagement = () => {
                   </Space>
                 </Descriptions.Item>
               )}
-              <Descriptions.Item label="Password">
-                <Space>
-                  <span style={{ fontFamily: 'monospace', fontSize: '14px', background: '#f5f5f5', padding: '4px 8px', borderRadius: '4px' }}>
-                    {selectedUser.password}
-                  </span>
-                  <Button
-                    type="text"
-                    size="small"
-                    icon={<CopyOutlined />}
-                    onClick={() => copyPassword(selectedUser.password)}
-                    title="Copy password"
-                  />
-                </Space>
-              </Descriptions.Item>
               {selectedUser.created_at && (
                 <Descriptions.Item label="Created At">
                   {new Date(selectedUser.created_at).toLocaleString()}
@@ -291,6 +295,72 @@ const UserManagement = () => {
                 </p>
               </div>
             )}
+          </div>
+        )}
+      </Modal>
+
+      {/* Password Change Modal */}
+      <Modal
+        title="Change Password"
+        open={isPasswordModalVisible}
+        onCancel={() => {
+          setIsPasswordModalVisible(false);
+          passwordForm.resetFields();
+        }}
+        footer={[
+          <Button key="cancel" onClick={() => {
+            setIsPasswordModalVisible(false);
+            passwordForm.resetFields();
+          }}>
+            Cancel
+          </Button>,
+          <Button key="submit" type="primary" onClick={() => passwordForm.submit()}>
+            Change Password
+          </Button>,
+        ]}
+        width={400}
+      >
+        {selectedUser && (
+          <div>
+            <Descriptions bordered column={1} size="small" style={{ marginBottom: 16 }}>
+              <Descriptions.Item label="User">{selectedUser.username} ({selectedUser.full_name})</Descriptions.Item>
+              <Descriptions.Item label="Role">
+                <Tag color={selectedUser.role === 'student' ? 'blue' : selectedUser.role === 'teacher' ? 'green' : 'red'}>
+                  {selectedUser.role?.toUpperCase()}
+                </Tag>
+              </Descriptions.Item>
+            </Descriptions>
+            
+            <Form form={passwordForm} layout="vertical" onFinish={handlePasswordChange}>
+              <Form.Item
+                name="password"
+                label="New Password"
+                rules={[
+                  { required: true, message: 'Please input new password!' },
+                  { min: 6, message: 'Password must be at least 6 characters!' }
+                ]}
+              >
+                <Input.Password placeholder="Enter new password" />
+              </Form.Item>
+              <Form.Item
+                name="confirmPassword"
+                label="Confirm Password"
+                dependencies={['password']}
+                rules={[
+                  { required: true, message: 'Please confirm password!' },
+                  ({ getFieldValue }) => ({
+                    validator(_, value) {
+                      if (!value || getFieldValue('password') !== value) {
+                        return Promise.reject(new Error('Passwords do not match!'));
+                      }
+                      return Promise.resolve();
+                    },
+                  }),
+                ]}
+              >
+                <Input.Password placeholder="Confirm new password" />
+              </Form.Item>
+            </Form>
           </div>
         )}
       </Modal>
