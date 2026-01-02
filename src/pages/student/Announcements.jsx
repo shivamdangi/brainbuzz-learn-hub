@@ -118,7 +118,7 @@ const StudentAnnouncements = () => {
     if (!courseId || Number.isNaN(courseIdNum)) return;
     let ws;
     try {
-      const url = `ws://localhost:8000/ws/courses/${courseId}/announcements`;
+      const url = `ws://https://brainbuzz-backend-1.onrender.com/ws/courses/${courseId}/announcements`;
       ws = new WebSocket(url);
       ws.onopen = () => console.log('[WS] Opened announcements channel for course', courseId);
       if (typeof Notification !== 'undefined' && Notification.permission === 'default') {

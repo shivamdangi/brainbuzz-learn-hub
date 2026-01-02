@@ -23,7 +23,7 @@ const LoginPage = () => {
       formData.append('username', username);
       formData.append('password', password);
       
-      const response = await fetch('http://localhost:8000/token', {
+      const response = await fetch('https://brainbuzz-backend-1.onrender.com/token', {
         method: 'POST',
         body: formData,
       });
