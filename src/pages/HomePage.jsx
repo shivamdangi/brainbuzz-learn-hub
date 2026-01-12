@@ -69,11 +69,11 @@ export const HomePage = ({ onNavigate, onViewTeacher }) => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="bg-card rounded-2xl shadow-card p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center">
-              <div className="w-48 h-48 flex-shrink-0">
+              <div className="w-48 h-48 flex-shrink-0 rounded-full overflow-hidden bg-gray-100 shadow-lg">
                 <img
                   src="/founder/zeba.jpg"
                   alt="Ms. Zeba"
-                  className="w-full h-full rounded-full object-cover shadow-lg"
+                  className="w-full h-full object-contain"
                 />
               </div>
               <div>
