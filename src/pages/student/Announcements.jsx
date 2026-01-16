@@ -4,6 +4,7 @@ import { List, Card, Typography, Tag, Empty, Skeleton, message, Button, Alert } 
 import { BellOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import api from '../../services/api';
+import { GoogleMeetModal } from '../../components/GoogleMeetModal';
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -14,6 +15,15 @@ const StudentAnnouncements = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [seenIds, setSeenIds] = useState(new Set());
   const [wsError, setWsError] = useState(false);
+  const [meetModalOpen, setMeetModalOpen] = useState(false);
+  const [selectedMeetUrl, setSelectedMeetUrl] = useState('');
+  const [selectedAnnouncementTitle, setSelectedAnnouncementTitle] = useState('');
+
+  const handleOpenMeetModal = (meetUrl, announcementTitle) => {
+    setSelectedMeetUrl(meetUrl);
+    setSelectedAnnouncementTitle(announcementTitle);
+    setMeetModalOpen(true);
+  };
 
   // Helper to convert base64 public key to Uint8Array for pushManager
   const urlBase64ToUint8Array = (base64String) => {
@@ -43,7 +53,7 @@ const StudentAnnouncements = () => {
             n.onclick = () => {
               window.focus();
               if (a.class_link) {
-                window.open(a.class_link, '_blank');
+                handleOpenMeetModal(a.class_link, a.title);
               }
             };
           });
@@ -146,7 +156,7 @@ const StudentAnnouncements = () => {
                 n.onclick = () => {
                   window.focus();
                   if (a.class_link) {
-                    window.open(a.class_link, '_blank');
+                    handleOpenMeetModal(a.class_link, a.title);
                   }
                 };
                 console.log('[Push] Notification shown for', a.title);
@@ -232,9 +242,7 @@ const StudentAnnouncements = () => {
                   {item.class_link && (
                     <Button 
                       type="primary" 
-                      href={item.class_link} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+                      onClick={() => handleOpenMeetModal(item.class_link, item.title)}
                       size="small"
                       className="w-full sm:w-auto"
                     >
@@ -248,6 +256,13 @@ const StudentAnnouncements = () => {
         />
       )}
       </div>
+      
+      <GoogleMeetModal
+        isOpen={meetModalOpen}
+        onClose={() => setMeetModalOpen(false)}
+        meetUrl={selectedMeetUrl}
+        announcementTitle={selectedAnnouncementTitle}
+      />
     </div>
   );
 };
