@@ -4,7 +4,7 @@ export const teachers = [
     name: "Ms. Areen",
     classes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     courses: ["Science"],
-    qualifications: "B.Sc. (pursuing)",
+    qualifications: "B.Sc.",
     experienceYears: 3,
     rating: 5,
     profileImage: "/teachers/ms-areen.jpg",
