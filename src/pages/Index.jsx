@@ -6,6 +6,7 @@ import { HomePage } from "./HomePage";
 import { ExplorePage } from "./ExplorePage";
 import { PlatformPage } from "./PlatformPage";
 import { ContactPage } from "./ContactPage";
+import { EdAIChatbot } from "@/components/EdAIChatbot";
 
 const Index = () => {
   const [currentPage, setCurrentPage] = useState("home");
@@ -43,6 +44,8 @@ const Index = () => {
       </main>
 
       <Footer />
+
+      <EdAIChatbot onNavigateToContact={() => handleNavigate("contact")} />
 
       <TeacherModal
         teacher={selectedTeacher}

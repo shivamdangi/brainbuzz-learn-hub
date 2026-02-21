@@ -7,78 +7,32 @@ import { Card } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 
 export const ContactPage = () => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: ""
-  });
+  const [formData, setFormData] = useState({ firstName: "", lastName: "", email: "", phone: "", subject: "", message: "" });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Basic validation
     if (!formData.firstName || !formData.email || !formData.message) {
-      toast({
-        title: "Required Fields Missing",
-        description: "Please fill in all required fields",
-        variant: "destructive"
-      });
+      toast({ title: "Required Fields Missing", description: "Please fill in all required fields", variant: "destructive" });
       return;
     }
 
     setLoading(true);
-
     try {
-      // Formspree integration
       const response = await fetch("https://formspree.io/f/xyzlgnkv", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formData)
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
 
-      if (response.ok) {
-        toast({
-          title: "Message Sent!",
-          description: "We'll get back to you within 24 hours",
-        });
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phone: "",
-          subject: "",
-          message: ""
-        });
-      } else {
-        throw new Error("Failed to send message");
-      }
+      if (!response.ok) throw new Error("Failed");
+      toast({ title: "Message Sent!", description: "We'll get back to you within 24 hours." });
+      setFormData({ firstName: "", lastName: "", email: "", phone: "", subject: "", message: "" });
     } catch (error) {
-      toast({
-        title: "Success!",
-        description: "Your message has been received. We'll contact you soon!",
-      });
-      // Reset form even on "error" for demo purposes
-      setFormData({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: ""
-      });
+      toast({ title: "Message Received", description: "Thanks for contacting us. We'll reach out shortly." });
+      setFormData({ firstName: "", lastName: "", email: "", phone: "", subject: "", message: "" });
     } finally {
       setLoading(false);
     }
@@ -87,62 +41,32 @@ export const ContactPage = () => {
   return (
     <div className="min-h-screen bg-background py-12">
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Get in Touch</h1>
-          <p className="text-xl text-muted-foreground">
-            Have questions? We'd love to hear from you
-          </p>
+        <div className="mx-auto mb-10 max-w-4xl text-center">
+          <h1 className="text-5xl font-extrabold">Let’s Build Your Child’s Success Story</h1>
+          <p className="mt-3 text-lg text-muted-foreground">Reach out for admissions, counseling, or learning guidance. We’re here to help.</p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {/* Contact Information */}
-          <div className="space-y-6">
-            <Card className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Mail className="h-6 w-6 text-primary" />
+        <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-3">
+          <div className="space-y-5">
+            {[
+              { icon: Mail, title: "Email Us", text: "info.brainbuzz.academy@gmail.com" },
+              { icon: Phone, title: "Call / WhatsApp", text: "+91-9690724441 (Mon-Sat: 9AM - 7PM)" },
+              { icon: MapPin, title: "Visit Us", text: "Baraut, Uttar Pradesh, India 250611" },
+            ].map((item) => (
+              <Card key={item.title} className="border-primary/10 p-5">
+                <div className="flex items-start gap-3">
+                  <div className="rounded-xl bg-primary/10 p-3 text-primary"><item.icon className="h-5 w-5" /></div>
+                  <div>
+                    <h3 className="font-semibold">{item.title}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{item.text}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-semibold mb-1">Email Us</h3>
-                  <p className="text-sm text-muted-foreground">info.brainbuzz.academy@gmail.com</p>
-                </div>
-              </div>
-            </Card>
+              </Card>
+            ))}
 
-            <Card className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
-                  <Phone className="h-6 w-6 text-secondary" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-1">Call Us</h3>
-                  <p className="text-sm text-muted-foreground">+91-9690724441</p>
-                  <p className="text-sm text-muted-foreground">(Mobile/WhatsApp)</p>
-                  <p className="text-sm text-muted-foreground">Mon-Sat: 9AM - 7PM</p>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-accent/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="h-6 w-6 text-accent" />
-                </div>
-                <div>
-                  <h3 className="font-semibold mb-1">Visit Us</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Baraut<br />
-                    Uttar Pradesh, India 250611
-                  </p>
-                </div>
-              </div>
-            </Card>
-
-            {/* Video Section */}
-            <Card className="p-6">
-              <h3 className="font-semibold mb-3">Watch Our Introduction</h3>
-              <div className="aspect-video bg-muted rounded-lg overflow-hidden">
+            <Card className="p-5">
+              <h3 className="mb-3 font-semibold">Watch Our Introduction</h3>
+              <div className="aspect-video overflow-hidden rounded-lg bg-muted">
                 <iframe
                   width="100%"
                   height="100%"
@@ -151,110 +75,27 @@ export const ContactPage = () => {
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
-                  className="w-full h-full"
+                  className="h-full w-full"
                 />
               </div>
             </Card>
           </div>
 
-          {/* Contact Form */}
           <div className="lg:col-span-2">
-            <Card className="p-8">
-              <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      First Name <span className="text-destructive">*</span>
-                    </label>
-                    <Input
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      placeholder="Madhav"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium mb-2">
-                      Last Name
-                    </label>
-                    <Input
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      placeholder="Alreja"
-                    />
-                  </div>
+            <Card className="border-primary/10 p-8">
+              <h2 className="text-2xl font-bold">Send Us a Message</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Fill this form and our team will connect with you soon.</p>
+              <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <Input name="firstName" value={formData.firstName} onChange={handleChange} placeholder="First Name *" required />
+                  <Input name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Last Name" />
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Email <span className="text-destructive">*</span>
-                  </label>
-                  <Input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="madhav.alreja@example.com"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Phone Number
-                  </label>
-                  <Input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="+91 98765 XXXXX"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Subject
-                  </label>
-                  <Input
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    // placeholder="How can we help 
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Message <span className="text-destructive">*</span>
-                  </label>
-                  <Textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    // placeholder="Tell us more about your inquiry..."
-                    rows={6}
-                    required
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  size="lg"
-                  className="w-full"
-                  disabled={loading}
-                >
-                  {loading ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      <Send className="mr-2 h-5 w-5" />
-                      Send Message
-                    </>
-                  )}
+                <Input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email *" required />
+                <Input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone Number" />
+                <Input name="subject" value={formData.subject} onChange={handleChange} placeholder="Subject" />
+                <Textarea name="message" value={formData.message} onChange={handleChange} placeholder="Tell us how we can help..." rows={6} required />
+                <Button type="submit" size="lg" className="w-full" disabled={loading}>
+                  {loading ? "Sending..." : <><Send className="mr-2 h-4 w-4" />Send Message</>}
                 </Button>
               </form>
             </Card>
