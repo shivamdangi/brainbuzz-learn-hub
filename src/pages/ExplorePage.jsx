@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Search, Filter, BookOpen, Users, ChevronDown, ChevronUp } from "lucide-react";
+import { Search, Filter, BookOpen, Users, ChevronDown, ChevronUp, Type } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TeacherCard } from "@/components/TeacherCard";
@@ -17,12 +17,15 @@ export const ExplorePage = ({ onViewTeacher }) => {
   const [coursesExpanded, setCoursesExpanded] = useState(true);
   const [teachersExpanded, setTeachersExpanded] = useState(true);
 
+  // Keep only current org teachers for now (first 3), can be expanded later.
+  const organizationTeachers = useMemo(() => teachers.slice(0, 3), []);
+
   const allSubjects = useMemo(() => {
     const subjectsSet = new Set();
     courses.forEach((course) => subjectsSet.add(course.subject));
-    teachers.forEach((teacher) => teacher.courses.forEach((course) => subjectsSet.add(course)));
+    organizationTeachers.forEach((teacher) => teacher.courses.forEach((course) => subjectsSet.add(course)));
     return Array.from(subjectsSet).sort();
-  }, []);
+  }, [organizationTeachers]);
 
   const filteredCourses = useMemo(
     () =>
@@ -43,7 +46,7 @@ export const ExplorePage = ({ onViewTeacher }) => {
 
   const filteredTeachers = useMemo(
     () =>
-      teachers.filter((teacher) => {
+      organizationTeachers.filter((teacher) => {
         const matchesSearch =
           searchQuery === "" ||
           teacher.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -54,7 +57,7 @@ export const ExplorePage = ({ onViewTeacher }) => {
 
         return matchesSearch && matchesClass && matchesSubject;
       }),
-    [searchQuery, selectedClass, selectedSubject],
+    [organizationTeachers, searchQuery, selectedClass, selectedSubject],
   );
 
   const resetFilters = () => {
@@ -116,6 +119,27 @@ export const ExplorePage = ({ onViewTeacher }) => {
         <div className="mb-8 flex flex-wrap items-center gap-3">
           <Badge variant="outline" className="px-3 py-1">{filteredCourses.length} courses</Badge>
           <Badge variant="outline" className="px-3 py-1">{filteredTeachers.length} teachers</Badge>
+        </div>
+
+        <div className="mb-14">
+          <div className="mb-6 flex items-center gap-2">
+            <Type className="h-5 w-5 text-primary" />
+            <h2 className="text-2xl font-bold">Subjects (Font Art Posters)</h2>
+          </div>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {allSubjects.map((subject, idx) => (
+              <Card key={subject} className="group relative overflow-hidden border-primary/15 bg-gradient-to-br from-white via-blue-50 to-cyan-50 p-0 shadow-card">
+                <div className="absolute inset-0 opacity-60 [background:radial-gradient(circle_at_top_right,rgba(59,130,246,0.22),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(20,184,166,0.18),transparent_50%)]" />
+                <div className="relative flex min-h-40 flex-col items-center justify-center px-4 py-6 text-center">
+                  <div className="mb-2 text-xs font-semibold uppercase tracking-[0.22em] text-primary/70">Subject</div>
+                  <h3 className={`text-3xl font-black leading-tight tracking-tight text-primary drop-shadow-sm ${idx % 2 === 0 ? "font-serif" : "font-sans"}`}>
+                    {subject}
+                  </h3>
+                  <div className="mt-3 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Classes 1-10</div>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
 
         {filteredCourses.length > 0 && (
