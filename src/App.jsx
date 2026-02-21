@@ -17,6 +17,7 @@ import TeacherDashboard from './pages/teacher/Dashboard';
 import TeacherCourses from './pages/teacher/Courses';
 import TeacherAnnouncements from './pages/teacher/Announcements';
 import TeacherStudents from './pages/teacher/Students';
+import TeacherNotes from './pages/teacher/Notes';
 import StudentAnnouncements from './pages/student/Announcements';
 
 const queryClient = new QueryClient();
@@ -88,6 +89,7 @@ const App = () => (
               <Route index element={<Navigate to="announcements" replace />} />
               <Route path="announcements" element={<TeacherAnnouncements />} />
               <Route path="students" element={<TeacherStudents />} />
+              <Route path="notes" element={<TeacherNotes />} />
             </Route>
             <Route 
               path="messages" 
