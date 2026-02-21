@@ -1,11 +1,7 @@
 import { useMemo, useState } from "react";
-import { Send, X, Sparkles, Bot } from "lucide-react";
+import { MessageCircle, Send, X, Sparkles, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
-// NOTE: For security, do not commit real keys. Replace locally for testing.
-const OPENROUTER_API_KEY = "sk-or-v1-REPLACE_WITH_YOUR_OPENROUTER_KEY";
-const OPENROUTER_MODEL = "stepfun/step-3.5-flash:free";
 
 
 const escapeHtml = (raw = "") =>
@@ -66,6 +62,9 @@ const markdownToHtml = (raw = "") => {
   return rendered.join("");
 };
 
+const OPENROUTER_API_KEY = "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";
+const OPENROUTER_MODEL = "stepfun/step-3.5-flash:free";
+
 const BOT_SYSTEM_PROMPT = `You are EdAI, the BrainBuzz Academy assistant.
 Your job is to help prospective students/parents with concise answers based on this website.
 Important context:
@@ -78,7 +77,8 @@ Important context:
 - If users ask to enroll, counseling, admission, or connect with the team, strongly suggest visiting the Contact page.
 - If asked about teachers, provide only brief/general info and suggest visiting Explore for full profiles.
 - Keep answers short, friendly, and practical.
-- Do not invent pricing/schedules if not known. Say you can connect them to the team via Contact page.`;
+- Do not invent pricing/schedules if not known. Say you can connect them to the team via Contact page.
+- Do not provide any information outside the scope of brainbuzz academy, apart from study doubts of students. That also reply for only few, later ask user to contact the academy for further support. `;
 
 export const EdAIChatbot = ({ onNavigateToContact }) => {
   const [open, setOpen] = useState(false);
