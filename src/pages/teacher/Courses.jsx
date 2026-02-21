@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Outlet, Link, useLocation, useParams } from 'react-router-dom';
 import { Card, Button, Tabs, Skeleton, Empty, message, Result } from 'antd';
-import { BookOutlined, FileTextOutlined, TeamOutlined, CalendarOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
+import { BookOutlined, FileTextOutlined, TeamOutlined, CalendarOutlined, LockOutlined, UserOutlined, FolderOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import api from '../../services/api';
 
@@ -121,6 +121,17 @@ const TeacherCourses = () => {
               </span>
             } 
             key="students"
+          >
+            <Outlet />
+          </TabPane>
+          <TabPane 
+            tab={
+              <span>
+                <FolderOutlined />
+                Notes & Documents
+              </span>
+            } 
+            key="notes"
           >
             <Outlet />
           </TabPane>
