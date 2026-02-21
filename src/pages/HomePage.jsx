@@ -1,4 +1,4 @@
-import { Users, GraduationCap, TrendingUp, Award } from "lucide-react";
+import { Users, GraduationCap, TrendingUp, Award, ArrowRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TeacherCard } from "@/components/TeacherCard";
 import { TestimonialCard } from "@/components/TestimonialCard";
@@ -10,156 +10,94 @@ export const HomePage = ({ onNavigate, onViewTeacher }) => {
   const displayedTestimonials = testimonials.slice(0, 3);
 
   const stats = [
-    { icon: Users, label: "Active Students", value: "100+", color: "black" },
-    { icon: GraduationCap, label: "Expert Teachers", value: "20+", color: "black" },
-    { icon: TrendingUp, label: "Success Rate", value: "95%", color: "black" },
-    { icon: Award, label: "Years Experience", value: "10+", color: "black" },
+    { icon: Users, label: "Active Students", value: "100+" },
+    { icon: GraduationCap, label: "Expert Teachers", value: "20+" },
+    { icon: TrendingUp, label: "Success Rate", value: "95%" },
+    { icon: Award, label: "Years Experience", value: "10+" },
   ];
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-hero text-white py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-30" />
-        
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">
-              Transform Your Learning Journey
+      <section className="relative overflow-hidden px-4 py-24">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_hsla(200,100%,70%,0.25),_transparent_50%),radial-gradient(circle_at_bottom_left,_hsla(220,100%,65%,0.22),_transparent_45%)]" />
+        <div className="container relative z-10 mx-auto">
+          <div className="mx-auto max-w-5xl text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-medium text-primary">
+              <Sparkles className="h-4 w-4" />
+              Modern learning for Classes 1-10 (CBSE & ICSE)
+            </span>
+            <h1 className="mt-6 text-5xl font-extrabold leading-tight md:text-7xl">
+              Unlock Academic Excellence with
+              <span className="bg-gradient-hero bg-clip-text text-transparent"> BrainBuzz Academy</span>
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-white/90">
-              Expert tutoring for Classes 1-10 (CBSE & ICSE)
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
+              A focused learning ecosystem where expert teachers, structured support, and engaging lessons help students build strong fundamentals and confidence.
             </p>
-            
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+
+            <div className="mt-10 flex flex-wrap justify-center gap-4">
+              <Button size="lg" onClick={() => onNavigate("explore")} className="rounded-full px-8 text-base">
+                Explore Teachers
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button size="lg" variant="outline" onClick={() => onNavigate("contact")} className="rounded-full px-8 text-base">
+                Book a Free Consultation
+              </Button>
+            </div>
+
+            <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
               {stats.map((stat) => (
-                <div key={stat.label} className="bg-white/10 backdrop-blur-sm rounded-xl p-4 animate-slide-up">
-                  <stat.icon className={`h-8 w-8 mx-auto mb-2 ${stat.color}`} />
-                  <div className="text-3xl font-bold mb-1">{stat.value}</div>
-                  <div className="text-sm text-white/80">{stat.label}</div>
+                <div key={stat.label} className="rounded-2xl border border-border/70 bg-card/70 p-5 shadow-card backdrop-blur-sm">
+                  <stat.icon className="mx-auto mb-2 h-6 w-6 text-primary" />
+                  <div className="text-2xl font-bold">{stat.value}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </div>
               ))}
             </div>
-
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Button
-                size="lg"
-                variant="secondary"
-                onClick={() => onNavigate("explore")}
-                className="text-lg px-8"
-              >
-                Explore More
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                onClick={() => onNavigate("contact")}
-                className="text-lg px-8 bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 text-white"
-              >
-                Get Started
-              </Button>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Founder Section */}
-      <section className="py-16 bg-muted/50">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-card rounded-2xl shadow-card p-8 md:p-12 flex flex-col md:flex-row gap-8 items-center">
-              <div className="w-48 h-48 flex-shrink-0">
-                <img
-                  src="/founder/zeba.jpg"
-                  alt="Ms. Zeba"
-                  className="w-full h-full rounded-full object-cover shadow-lg"
-                />
-              </div>
-              <div>
-                <h2 className="text-3xl font-bold mb-2">Meet Our Founder</h2>
-                <h3 className="text-xl text-primary font-semibold mb-4">Ms. Zeba</h3>
-                <p className="text-muted-foreground mb-4 leading-relaxed">
-                  With over 15 years of expertise in Spoken English and Grammar, Ms. Zeba founded 
-                  BrainBuzz Academy with a vision to make quality education accessible to every student. 
-                  Her passion for teaching and commitment to excellence has helped hundreds of students 
-                  achieve their academic dreams.
-                </p>
-                <div className="flex items-center gap-2">
-                  <Award className="h-5 w-5 text-accent" />
-                  <span className="text-sm font-medium">Spoken English & Grammar Expert</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Teachers */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Meet Our Expert Teachers</h2>
-            <p className="text-xl text-muted-foreground">
-              Learn from the best educators with years of experience
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {featuredTeachers.map((teacher) => (
-              <TeacherCard
-                key={teacher.id}
-                teacher={teacher}
-                onViewDetails={onViewTeacher}
-              />
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Button
-              size="lg"
-              onClick={() => onNavigate("explore")}
-              variant="outline"
-            >
-              View All Teachers
-            </Button>
+          <div className="mx-auto grid max-w-5xl items-center gap-8 rounded-3xl border border-primary/10 bg-gradient-to-br from-white to-blue-50 p-8 shadow-card md:grid-cols-[220px_1fr]">
+            <img src="/founder/zeba.jpg" alt="Ms. Zeba" className="h-52 w-52 justify-self-center rounded-3xl object-cover shadow-lg" />
+            <div>
+              <h2 className="text-3xl font-bold">Meet Our Founder</h2>
+              <p className="mt-2 text-lg font-semibold text-primary">Ms. Zeba • Spoken English & Grammar Expert</p>
+              <p className="mt-4 leading-relaxed text-muted-foreground">With 15+ years of teaching excellence, Ms. Zeba founded BrainBuzz to make high-quality, student-friendly education accessible. Her mission is to help every learner strengthen concepts, communicate better, and score higher with confidence.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-16 bg-muted/50">
+      <section className="py-16 bg-muted/40">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">What Our Students Say</h2>
-            <p className="text-xl text-muted-foreground">
-              Success stories from our amazing students
-            </p>
+          <div className="mb-10 text-center">
+            <h2 className="text-4xl font-bold">Meet Our Expert Teachers</h2>
+            <p className="mt-2 text-lg text-muted-foreground">Experienced educators dedicated to personalized outcomes.</p>
           </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {featuredTeachers.map((teacher) => (
+              <TeacherCard key={teacher.id} teacher={teacher} onViewDetails={onViewTeacher} />
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Button size="lg" variant="outline" onClick={() => onNavigate("explore")} className="rounded-full">View All Teachers</Button>
+          </div>
+        </div>
+      </section>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="mb-10 text-center">
+            <h2 className="text-4xl font-bold">What Our Students Say</h2>
+            <p className="mt-2 text-lg text-muted-foreground">Real stories from learners and families.</p>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {displayedTestimonials.map((testimonial) => (
               <TestimonialCard key={testimonial.id} testimonial={testimonial} />
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-gradient-hero text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">Ready to Excel in Your Studies?</h2>
-          <p className="text-xl mb-8 text-white/90">
-            Join BrainBuzz Academy today and unlock your full potential
-          </p>
-          <Button
-            size="lg"
-            variant="secondary"
-            onClick={() => onNavigate("contact")}
-            className="text-lg px-8"
-          >
-            Contact Us Today
-          </Button>
         </div>
       </section>
     </div>
