@@ -1,14 +1,32 @@
+import { useState } from "react";
 import { Star, Users, Clock, BookOpen } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 export const CourseCard = ({ course, onViewDetails }) => {
+  const [imageError, setImageError] = useState(false);
+
   return (
     <Card className="group cursor-pointer overflow-hidden border-primary/10 bg-card/80 transition-all duration-300 hover:-translate-y-1 hover:shadow-hover">
       <div onClick={() => onViewDetails && onViewDetails(course)}>
         <div className="relative h-48 overflow-hidden bg-muted">
-          <img src={course.courseImage} alt={course.name} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
+          {!imageError ? (
+            <img
+              src={course.courseImage}
+              alt={course.name}
+              onError={() => setImageError(true)}
+              className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          ) : (
+            <div className="h-full w-full bg-gradient-to-br from-blue-50 via-cyan-50 to-white">
+              <div className="flex h-full flex-col items-center justify-center px-4 text-center">
+                <div className="text-[11px] font-semibold uppercase tracking-[0.22em] text-primary/70">Subject</div>
+                <h3 className="mt-2 text-2xl font-black leading-tight tracking-tight text-primary drop-shadow-sm">{course.subject}</h3>
+                <p className="mt-2 line-clamp-1 text-xs text-muted-foreground">{course.name}</p>
+              </div>
+            </div>
+          )}
           <div className="absolute right-3 top-3 flex items-center gap-1 rounded-full bg-background/95 px-2 py-1 backdrop-blur-sm">
             <Star className="h-4 w-4 fill-accent text-accent" />
             <span className="text-sm font-semibold">{course.rating}</span>
