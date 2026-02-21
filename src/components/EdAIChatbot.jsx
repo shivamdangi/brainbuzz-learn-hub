@@ -3,7 +3,65 @@ import { MessageCircle, Send, X, Sparkles, Bot } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-// NOTE: For security, do not commit real keys. Replace locally for testing.
+
+const escapeHtml = (raw = "") =>
+  raw
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+
+const markdownToHtml = (raw = "") => {
+  const safe = escapeHtml(raw);
+  const lines = safe.split("\n");
+  const rendered = [];
+  let inList = false;
+
+  const inline = (txt) =>
+    txt
+      .replace(/`([^`]+)`/g, "<code class=\"rounded bg-foreground/10 px-1 py-0.5 text-[11px]\">$1</code>")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*([^*]+)\*/g, "<em>$1</em>")
+      .replace(/\[(.+?)\]\((https?:\/\/[^\s)]+)\)/g, '<a href=\"$2\" target=\"_blank\" rel=\"noreferrer\" class=\"underline\">$1</a>');
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (/^[-*]\s+/.test(trimmed)) {
+      if (!inList) {
+        rendered.push('<ul class=\"list-disc pl-5\">');
+        inList = true;
+      }
+      rendered.push(`<li>${inline(trimmed.replace(/^[-*]\s+/, ""))}</li>`);
+      continue;
+    }
+
+    if (inList) {
+      rendered.push("</ul>");
+      inList = false;
+    }
+
+    if (trimmed === "") {
+      rendered.push('<div class=\"h-2\"></div>');
+      continue;
+    }
+
+    if (/^###\s+/.test(trimmed)) {
+      rendered.push(`<h3 class=\"text-sm font-semibold\">${inline(trimmed.replace(/^###\s+/, ""))}</h3>`);
+    } else if (/^##\s+/.test(trimmed)) {
+      rendered.push(`<h2 class=\"text-sm font-semibold\">${inline(trimmed.replace(/^##\s+/, ""))}</h2>`);
+    } else if (/^#\s+/.test(trimmed)) {
+      rendered.push(`<h1 class=\"text-sm font-semibold\">${inline(trimmed.replace(/^#\s+/, ""))}</h1>`);
+    } else {
+      rendered.push(`<p>${inline(trimmed)}</p>`);
+    }
+  }
+
+  if (inList) rendered.push("</ul>");
+  return rendered.join("");
+};
+
 const OPENROUTER_API_KEY = "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";
 const OPENROUTER_MODEL = "stepfun/step-3.5-flash:free";
 
@@ -133,7 +191,7 @@ export const EdAIChatbot = ({ onNavigateToContact }) => {
                     : "mr-auto max-w-[90%] bg-muted text-foreground"
                 }`}
               >
-                {m.content}
+                {m.role === "assistant" ? (<div className="space-y-1" dangerouslySetInnerHTML={{ __html: markdownToHtml(m.content) }} />) : m.content}
               </div>
             ))}
             {loading && <div className="text-xs text-muted-foreground">EdAI is typing...</div>}
