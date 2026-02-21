@@ -60,7 +60,7 @@ export const HomePage = ({ onNavigate, onViewTeacher }) => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="mx-auto grid max-w-5xl items-center gap-8 rounded-3xl border border-primary/10 bg-gradient-to-br from-white to-blue-50 p-8 shadow-card md:grid-cols-[220px_1fr]">
-            <img src="/founder/zeba.jpg" alt="Ms. Zeba" className="h-52 w-52 justify-self-center rounded-3xl object-cover shadow-lg" />
+            <img src="/founder/zeba.jpg" alt="Ms. Zeba" className="h-52 w-52 justify-self-center rounded-3xl object-contain shadow-lg" />
             <div>
               <h2 className="text-3xl font-bold">Meet Our Founder</h2>
               <p className="mt-2 text-lg font-semibold text-primary">Ms. Zeba • Spoken English & Grammar Expert</p>
