@@ -61,8 +61,7 @@ const markdownToHtml = (raw = "") => {
   if (inList) rendered.push("</ul>");
   return rendered.join("");
 };
-
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 const OPENROUTER_MODEL = "stepfun/step-3.5-flash:free";
 
 const BOT_SYSTEM_PROMPT = `You are EdAI, the BrainBuzz Academy assistant.
@@ -128,6 +127,7 @@ export const EdAIChatbot = ({ onNavigateToContact }) => {
           ],
         }),
       });
+      console.log(response);
 
       if (!response.ok) {
         throw new Error("Failed to fetch chat response");
