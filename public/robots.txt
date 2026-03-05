@@ -12,3 +12,6 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+# XML sitemap
+Sitemap: https://brainbuzz-learn-hub.vercel.app/sitemap.xml
