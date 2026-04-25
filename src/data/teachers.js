@@ -28,22 +28,6 @@ export const teachers = [
     specializations: ["Spoken English", "Grammar Mastery", "Public Speaking & Confidence Building"]
   },
   {
-    id: 3,
-    name: "Ms. Nisha Sharma",
-    classes: [6, 7, 8, 9, 10],
-    courses: ["Social Studies"],
-    qualifications: "B.Sc., B.Ed",
-    experienceYears: 9,
-    rating: 5,
-    profileImage: "/teachers/nisha-sharma.jpg",
-    bio: "Experienced Social Studies educator with a passion for concept clarity and joyful learning. Blends real-life examples, visuals, and practice to make topics easy to understand and remember.",
-    specializations: [
-      "Concept-based Teaching",
-      "Activity & Experiment-driven Lessons",
-      "Exam Strategy & Revision Planning"
-    ]
-  },
-  {
     id: 4,
     name: "Ms. Sneha Reddy",
     classes: [1, 2, 3, 4, 5],
