@@ -1,98 +1,264 @@
-import { Users, GraduationCap, TrendingUp, Award, ArrowRight, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { Canvas } from "@react-three/fiber";
+import { Environment, Float, Line, Sphere, Stars, Text } from "@react-three/drei";
+import { ArrowRight, BookOpen, BrainCircuit, Calculator, FlaskConical, GraduationCap, Lightbulb, Sparkles, TrendingUp, Users } from "lucide-react";
+import { FaJava } from "react-icons/fa";
+import { SiPython } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { TeacherCard } from "@/components/TeacherCard";
 import { TestimonialCard } from "@/components/TestimonialCard";
 import { teachers } from "@/data/teachers";
 import { testimonials } from "@/data/testimonials";
+import "./HomePage.css";
+
+const floatingElements = [
+  "H2O + CO2 -> C6H12O6 + O2",
+  "pH = -log[H+]",
+  "NaCl + AgNO3 -> AgCl",
+  "CH4 + 2O2 -> CO2 + 2H2O",
+  "PV = nRT",
+  "Molarity = moles / liter",
+  "DNA -> RNA -> Protein",
+  "Lab + Logic = Discovery",
+];
+
+const stack = [
+  { name: "Java", icon: FaJava },
+  { name: "Python", icon: SiPython },
+  { name: "English", icon: BookOpen },
+  { name: "Science", icon: FlaskConical },
+  { name: "Maths", icon: Calculator },
+];
+
+const atoms = [
+  { id: "a", position: [0, 0, 0], color: "#68d6ff", size: 0.34 },
+  { id: "b", position: [1.3, 0.6, -0.4], color: "#6f88ff", size: 0.24 },
+  { id: "c", position: [-1.25, 0.7, 0.5], color: "#7af2d1", size: 0.26 },
+  { id: "d", position: [0.2, -1.2, 0.7], color: "#f2d36e", size: 0.22 },
+  { id: "e", position: [-0.9, -0.95, -0.75], color: "#bba3ff", size: 0.2 },
+];
+
+const bonds = [
+  [atoms[0].position, atoms[1].position],
+  [atoms[0].position, atoms[2].position],
+  [atoms[0].position, atoms[3].position],
+  [atoms[0].position, atoms[4].position],
+  [atoms[2].position, atoms[3].position],
+];
+
+const HeroCore = () => (
+  <>
+    <ambientLight intensity={1.1} />
+    <directionalLight intensity={1.15} position={[3, 2, 3]} />
+    <Stars radius={75} depth={24} count={600} factor={2} fade />
+    <Float speed={1.5} rotationIntensity={0.9} floatIntensity={1.25}>
+      {bonds.map((points, index) => (
+        <Line key={`bond-${index}`} points={points} color="#9ab6ff" lineWidth={1.2} transparent opacity={0.9} />
+      ))}
+      {atoms.map((atom) => (
+        <Sphere key={atom.id} args={[atom.size, 32, 32]} position={atom.position}>
+          <meshStandardMaterial color={atom.color} roughness={0.3} metalness={0.4} emissive={atom.color} emissiveIntensity={0.25} />
+        </Sphere>
+      ))}
+    </Float>
+    <Float speed={2.2} rotationIntensity={0.7} floatIntensity={1.6}>
+      <Text fontSize={0.45} color="#8cf7ff" anchorX="center" anchorY="middle" position={[0, -2.1, 0]}>
+        BrainBuzz Lab
+      </Text>
+    </Float>
+    <Environment preset="studio" />
+  </>
+);
 
 export const HomePage = ({ onNavigate, onViewTeacher }) => {
+  const [splashPhase, setSplashPhase] = useState("brain");
   const featuredTeachers = teachers.slice(0, 3);
   const displayedTestimonials = testimonials.slice(0, 3);
+  const { scrollYProgress } = useScroll();
+  const heroScale = useTransform(scrollYProgress, [0, 0.24], [1, 1.08]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.3], [0.56, 0.2]);
+  const contentLift = useTransform(scrollYProgress, [0, 0.35], [0, -70]);
+  const floatingDrift = useTransform(scrollYProgress, [0, 1], [0, -260]);
+  const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
-  const stats = [
-    { icon: Users, label: "Active Students", value: "100+" },
-    { icon: GraduationCap, label: "Expert Teachers", value: "20+" },
-    { icon: TrendingUp, label: "Success Rate", value: "95%" },
-    { icon: Award, label: "Years Experience", value: "10+" },
-  ];
+  useEffect(() => {
+    const bulbTimer = setTimeout(() => setSplashPhase("bulb"), 1000);
+    const burstTimer = setTimeout(() => setSplashPhase("flash"), 1900);
+    const exitTimer = setTimeout(() => setSplashPhase("done"), 3500);
+    return () => {
+      clearTimeout(bulbTimer);
+      clearTimeout(burstTimer);
+      clearTimeout(exitTimer);
+    };
+  }, []);
 
   return (
-    <div className="min-h-screen bg-background">
-      <section className="relative overflow-hidden px-4 py-24">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_hsla(200,100%,70%,0.25),_transparent_50%),radial-gradient(circle_at_bottom_left,_hsla(220,100%,65%,0.22),_transparent_45%)]" />
-        <div className="container relative z-10 mx-auto">
-          <div className="mx-auto max-w-5xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-medium text-primary">
-              <Sparkles className="h-4 w-4" />
-              Modern learning for Classes 1-10 (CBSE & ICSE)
+    <div className="bb-home">
+      <motion.div className="bb-scroll-progress" style={{ width: progressWidth }} />
+      <AnimatePresence>
+        {splashPhase !== "done" && (
+          <motion.section
+            className={`bb-splash ${splashPhase === "flash" ? "bb-splash-burst" : ""}`}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: splashPhase === "flash" ? 0.95 : 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <div className="bb-splash-icon-stack" aria-hidden>
+              <motion.div
+                className="bb-splash-brain"
+                initial={{ opacity: 0, scale: 0.7, y: 20 }}
+                animate={{ opacity: 1, scale: splashPhase === "flash" ? 1.35 : 1, y: 0 }}
+                transition={{ duration: 0.65 }}
+              >
+                <BrainCircuit size={78} strokeWidth={1.6} />
+              </motion.div>
+              <motion.div
+                className={`bb-splash-bulb ${splashPhase !== "brain" ? "is-on" : ""}`}
+                initial={{ opacity: 1, y: 0, scale: 1 }}
+                animate={{ opacity: 1, y: 0, scale: splashPhase === "flash" ? 1.1 : 1 }}
+                transition={{ duration: 0.45 }}
+              >
+                <Lightbulb size={34} strokeWidth={1.8} />
+              </motion.div>
+            </div>
+            <motion.h1
+              className="bb-splash-title"
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.7 }}
+            >
+              BrainBuzz
+            </motion.h1>
+            <p className="bb-splash-subtitle">From idea to illumination...</p>
+            <motion.div
+              className="bb-splash-flash"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: splashPhase === "flash" ? 1 : 0 }}
+              transition={{ duration: 0.33 }}
+            />
+          </motion.section>
+        )}
+      </AnimatePresence>
+
+      <section className="bb-hero">
+        <div className="bb-hero-overlay" />
+        <motion.div className="bb-hero-canvas-wrap" style={{ scale: heroScale, opacity: heroOpacity }}>
+          <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
+            <HeroCore />
+          </Canvas>
+        </motion.div>
+
+        <motion.div className="bb-floating-layer" aria-hidden style={{ y: floatingDrift }}>
+          {floatingElements.map((item, index) => (
+            <span key={item} className="bb-floating-token" style={{ animationDelay: `${index * 1.2}s` }}>
+              {item}
             </span>
-            <h1 className="mt-6 text-5xl font-extrabold leading-tight md:text-7xl">
-              Unlock Academic Excellence with
-              <span className="bg-gradient-hero bg-clip-text text-transparent"> BrainBuzz Academy</span>
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl">
-              A focused learning ecosystem where expert teachers, structured support, and engaging lessons help students build strong fundamentals and confidence.
-            </p>
+          ))}
+        </motion.div>
 
-            <div className="mt-10 flex flex-wrap justify-center gap-4">
-              <Button size="lg" onClick={() => onNavigate("explore")} className="rounded-full px-8 text-base">
-                Explore Teachers
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button size="lg" variant="outline" onClick={() => onNavigate("contact")} className="rounded-full px-8 text-base">
-                Book a Free Consultation
-              </Button>
-            </div>
+        <motion.div
+          className="bb-hero-content"
+          style={{ y: contentLift }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.4 }}
+          transition={{ duration: 0.9 }}
+        >
+          <span className="bb-pill">
+            <Sparkles size={16} />
+            Immersive learning for Classes 1-10
+          </span>
+          <h1>
+            Unlock Academic Excellence with
+            <span> BrainBuzz Academy</span>
+          </h1>
+          <p>
+            A focused learning ecosystem where expert teachers, structured support, and engaging lessons
+            help students build strong fundamentals and confidence.
+          </p>
+          <div className="bb-hero-actions">
+            <Button size="lg" onClick={() => onNavigate("explore")} className="bb-cta-primary rounded-full px-8">
+              Explore Teachers
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+            <Button size="lg" variant="outline" onClick={() => onNavigate("contact")} className="bb-cta-secondary rounded-full px-8">
+              Book a Free Consultation
+            </Button>
+          </div>
+        </motion.div>
+      </section>
 
-            <div className="mt-12 grid grid-cols-2 gap-4 md:grid-cols-4">
-              {stats.map((stat) => (
-                <div key={stat.label} className="rounded-2xl border border-border/70 bg-card/70 p-5 shadow-card backdrop-blur-sm">
-                  <stat.icon className="mx-auto mb-2 h-6 w-6 text-primary" />
-                  <div className="text-2xl font-bold">{stat.value}</div>
-                  <div className="text-sm text-muted-foreground">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+      <section className="bb-stack-section">
+        <div className="responsive-container">
+          <h2>Core learning tracks for secondary school</h2>
+          <div className="bb-stack-grid">
+            {stack.map((item, index) => (
+              <motion.div
+                key={item.name}
+                className="bb-stack-card"
+                initial={{ y: 30, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: index * 0.1 }}
+              >
+                <item.icon size={28} />
+                <span>{item.name}</span>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="mx-auto grid max-w-5xl items-center gap-8 rounded-3xl border border-primary/10 bg-gradient-to-br from-white to-blue-50 p-8 shadow-card md:grid-cols-[220px_1fr]">
-            <img src="/founder/zeba.jpg" alt="Ms. Zeba" className="h-52 w-52 justify-self-center rounded-3xl object-contain shadow-lg" />
+      <section className="bb-founder-section">
+        <div className="responsive-container">
+          <motion.div
+            className="bb-founder-card"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8 }}
+          >
+            <img src="/founder/zeba.jpg" alt="Ms. Zeba" />
             <div>
-              <h2 className="text-3xl font-bold">Meet Our Founder</h2>
-              <p className="mt-2 text-lg font-semibold text-primary">Ms. Zeba • Spoken English & Grammar Expert</p>
-              <p className="mt-4 leading-relaxed text-muted-foreground">With 15+ years of teaching excellence, Ms. Zeba founded BrainBuzz to make high-quality, student-friendly education accessible. Her mission is to help every learner strengthen concepts, communicate better, and score higher with confidence.</p>
+              <h2>Meet Our Founder</h2>
+              <p className="bb-founder-role">Ms. Zeba - Spoken English and Grammar Expert</p>
+              <p>
+                With 15+ years of teaching excellence, Ms. Zeba built BrainBuzz to make high-quality,
+                student-friendly education joyful, practical, and confidence-building.
+              </p>
+              <div className="bb-mini-stats">
+                <span><Users size={16} /> 100+ Students</span>
+                <span><GraduationCap size={16} /> 20+ Teachers</span>
+                <span><TrendingUp size={16} /> 95% Success Rate</span>
+              </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      <section className="py-16 bg-muted/40">
-        <div className="container mx-auto px-4">
-          <div className="mb-10 text-center">
-            <h2 className="text-4xl font-bold">Meet Our Expert Teachers</h2>
-            <p className="mt-2 text-lg text-muted-foreground">Experienced educators dedicated to personalized outcomes.</p>
-          </div>
+      <section className="bb-teachers-section">
+        <div className="responsive-container">
+          <h2>Meet Our Expert Teachers</h2>
+          <p>Mentors who combine concept clarity, real outcomes, and human connection.</p>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {featuredTeachers.map((teacher) => (
               <TeacherCard key={teacher.id} teacher={teacher} onViewDetails={onViewTeacher} />
             ))}
           </div>
           <div className="mt-8 text-center">
-            <Button size="lg" variant="outline" onClick={() => onNavigate("explore")} className="rounded-full">View All Teachers</Button>
+            <Button size="lg" variant="outline" onClick={() => onNavigate("explore")} className="bb-view-all-btn rounded-full">
+              View All Teachers
+            </Button>
           </div>
         </div>
       </section>
 
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="mb-10 text-center">
-            <h2 className="text-4xl font-bold">What Our Students Say</h2>
-            <p className="mt-2 text-lg text-muted-foreground">Real stories from learners and families.</p>
-          </div>
+      <section className="bb-testimonial-section">
+        <div className="responsive-container">
+          <h2>What Our Students Say</h2>
+          <p>Real stories from learners and families building confidence with BrainBuzz.</p>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {displayedTestimonials.map((testimonial) => (
               <TestimonialCard key={testimonial.id} testimonial={testimonial} />
